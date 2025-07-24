@@ -1,0 +1,15 @@
+server:
+  port: 9002
+
+spring:
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+
+# 日志配置
+logging:
+  level:
+    com.zhora: debug
+    org.springframework: warn
