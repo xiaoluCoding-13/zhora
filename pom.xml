@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.zhora</groupId>
-	<artifactId>zhora-agent</artifactId>
+	<artifactId>zhora</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>zhora-agent</name>
-	<description>zhora-agent</description>
+	<name>zhora</name>
+	<description>zhora</description>
 
 	<modules>
 		<module>zhora-business</module>
