@@ -44,6 +44,14 @@ mybatis-plus:
       logic-not-delete-value: 0  # 未删除值
   mapper-locations: classpath:mapper/*.xml  # XML 映射文件路径（可选）
 
+
+# Knife4j 配置
+knife4j:
+  enable: true  # 开启 Knife4j
+  setting:
+    language: zh-CN  # 中文界面
+    enable-swagger-default: false  # 禁用原生 Swagger UI
+
 # 防止XSS攻击
 xss:
   # 过滤开关

@@ -47,6 +47,7 @@
 
 		<jwt.version>0.12.6</jwt.version>
 		<fastjson.version>2.0.57</fastjson.version>
+		<jakarta.servlet.version>6.0.0</jakarta.servlet.version>
 	</properties>
 
 	<!-- 依赖声明 -->
@@ -184,6 +185,17 @@
 				<artifactId>langchain4j-reactor</artifactId>
 				<version>${langchain4j-beta7.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>dev.langchain4j</groupId>
+				<artifactId>langchain4j-redis</artifactId>
+				<version>1.0.0-alpha1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.redis.testcontainers</groupId>
+				<artifactId>testcontainers-redis</artifactId>
+				<version>${testcontainers-redis.version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>ai.djl.huggingface</groupId>
@@ -205,6 +217,11 @@
 				<version>${fastjson.version}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>jakarta.servlet</groupId>
+				<artifactId>jakarta.servlet-api</artifactId>
+				<version>${jakarta.servlet.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
