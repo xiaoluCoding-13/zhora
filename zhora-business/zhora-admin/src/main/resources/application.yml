@@ -30,6 +30,20 @@ spring:
       max-file-size: 10MB
       # 设置总上传的文件大小
       max-request-size: 20MB
+
+# MyBatis-Plus 配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 控制台打印 SQL
+    map-underscore-to-camel-case: true  # 下划线转驼峰命名
+  global-config:
+    db-config:
+      id-type: auto  # 主键策略（auto=自增，assign_id=雪花ID）
+      logic-delete-field: deleted  # 逻辑删除字段（默认 deleted）
+      logic-delete-value: 1  # 逻辑删除值
+      logic-not-delete-value: 0  # 未删除值
+  mapper-locations: classpath:mapper/*.xml  # XML 映射文件路径（可选）
+
 # 防止XSS攻击
 xss:
   # 过滤开关
