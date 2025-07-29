@@ -13,6 +13,11 @@ target/
 .springBeans
 .sts4-cache
 
+zhora-admin/src/main/resources/application-dynamic-local.yml
+zhora-admin/src/main/resources/application-local.yml
+zhora-front/src/main/resources/application-local.yml
+zhora-front/src/main/resources/application-dynamic-local.yml
+
 ### IntelliJ IDEA ###
 .idea
 *.iws

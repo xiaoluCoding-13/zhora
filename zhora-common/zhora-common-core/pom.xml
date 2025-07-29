@@ -102,11 +102,6 @@
             <version>${jakarta.servlet.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib-nodep</artifactId>
-        </dependency>
-
     </dependencies>
 
 </project>

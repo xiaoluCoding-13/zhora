@@ -1,10 +1,10 @@
 package com.zhora.service.ai.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhora.common.utils.ConvertUtil;
 import com.zhora.common.utils.NumberUtil;
 import com.zhora.dto.ai.AiConfigDTO;
 import com.zhora.dto.ai.AiConfigSearchDTO;
@@ -38,7 +38,7 @@ public class AiConfigServiceImpl extends ServiceImpl<AiConfigMapper, AiConfigEnt
         searchDTO.setDelFlag(Boolean.FALSE);
         LambdaQueryWrapper<AiConfigEntity> wrapper = getWrapper(searchDTO);
         AiConfigEntity entity = this.getOne(wrapper);
-        return ConvertUtil.convert(entity, AiConfigDTO.class);
+        return BeanUtil.copyProperties(entity, AiConfigDTO.class);
     }
 
     public Optional<AiConfigEntity> getPrecedenceChatLlmBy(Boolean enable) {
