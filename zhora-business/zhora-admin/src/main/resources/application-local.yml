@@ -19,4 +19,4 @@ langchain4j:
 logging:
   level:
     com.zhora: debug
-    org.springframework: warn
+    org.springframework: info

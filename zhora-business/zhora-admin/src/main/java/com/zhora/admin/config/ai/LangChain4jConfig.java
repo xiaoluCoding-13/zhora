@@ -28,7 +28,7 @@ public class LangChain4jConfig {
     public OpenAiStreamingChatModel deepSeekChatModel() {
         return OpenAiStreamingChatModel.builder()
                 .baseUrl("https://api.deepseek.com")
-                .apiKey("")
+                .apiKey("sk-049b7f9b70854c8f89049fe9c48e76c4")
                 .modelName("deepseek-chat")
                 .build();
     }

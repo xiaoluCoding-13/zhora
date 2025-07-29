@@ -16,7 +16,28 @@
         <maven.compiler.target>21</maven.compiler.target>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.zhora</groupId>
+                <artifactId>zhora-pojo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+        <dependency>
+            <groupId>com.zhora</groupId>
+            <artifactId>zhora-entity</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zhora</groupId>
+            <artifactId>zhora-vo</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

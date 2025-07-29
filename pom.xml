@@ -48,6 +48,8 @@
 		<jwt.version>0.12.6</jwt.version>
 		<fastjson.version>2.0.57</fastjson.version>
 		<jakarta.servlet.version>6.0.0</jakarta.servlet.version>
+		<jackson-databind.version>2.19.2</jackson-databind.version>
+		<cglib-nodep.version>3.3.0</cglib-nodep.version>
 	</properties>
 
 	<!-- 依赖声明 -->
@@ -222,6 +224,20 @@
 				<artifactId>jakarta.servlet-api</artifactId>
 				<version>${jakarta.servlet.version}</version>
 			</dependency>
+
+			<!-- JSON工具类 -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson-databind.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib-nodep</artifactId>
+				<version>${cglib-nodep.version}</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 

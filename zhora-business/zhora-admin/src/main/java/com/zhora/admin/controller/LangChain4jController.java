@@ -3,6 +3,9 @@ package com.zhora.admin.controller;
 import com.zhora.admin.service.Assistant;
 import com.zhora.admin.service.LangChain4jService;
 import com.zhora.admin.service.SteamAssistant;
+import com.zhora.common.dto.ResponseDTO;
+import com.zhora.entity.ai.AiConfigEntity;
+import com.zhora.service.ai.IAiConfigService;
 import dev.langchain4j.data.message.*;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
@@ -20,6 +23,7 @@ import reactor.core.publisher.Flux;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author zhehen.lu
@@ -27,7 +31,7 @@ import java.util.List;
  */
 @RestController
 @CrossOrigin
-@RequestMapping("/langchain4jChat")
+@RequestMapping("/ai")
 public class LangChain4jController {
 
     @Autowired
@@ -45,7 +49,13 @@ public class LangChain4jController {
 //    @Autowired
 //    ChatModel chatModel;
 
+    @Autowired
+    IAiConfigService aiConfigService;
 
+    @GetMapping("/getPrecedenceChatLlmBy")
+    public ResponseDTO<Optional<AiConfigEntity>> getPrecedenceChatLlmBy() {
+        return ResponseDTO.success(aiConfigService.getPrecedenceChatLlmBy(true));
+    }
 
     /**
      * 聊天
