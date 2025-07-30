@@ -8,9 +8,9 @@ DROP TABLE IF EXISTS "public"."ai_llm_config";
 CREATE TABLE "public"."ai_llm_config" (
   "id" int8 NOT NULL,
   "name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "code" "public"."llm_code_enum" NOT NULL,
+  "code" varchar(64) COLLATE "pg_catalog"."default" NOT NULL,
   "model_name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "type" "public"."llm_type_enum" NOT NULL,
+  "type" varchar(64) COLLATE "pg_catalog"."default" NOT NULL,
   "api_key" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "url" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "enable" bool NOT NULL DEFAULT true,
