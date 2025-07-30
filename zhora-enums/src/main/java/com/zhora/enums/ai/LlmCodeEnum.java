@@ -9,31 +9,32 @@ import java.util.Objects;
 /**
  * 
  * @author zhehen.lu
- * @date 2025/7/29 13:56
+ * @date 2025/7/29 13:55
  */
 @Getter
 @AllArgsConstructor
-public enum TypeEnum {
+public enum LlmCodeEnum {
 
-    LLM("LLM"),
+    DEEP_SEEK("DEEP_SEEK"),
 
-    CHAT("CHAT"),
+    Q_WEN("Q_WEN"),
 
-    EMBEDDING("EMBEDDING");
+    Q_WEN_EMBEDDING("Q_WEN_EMBEDDING"),
+    ;
 
     private final String value;
 
     public static Boolean checkValue(String value) {
-        return Arrays.stream(TypeEnum.values())
+        return Arrays.stream(LlmCodeEnum.values())
                 .anyMatch(e -> Objects.equals(e.getValue(), value));
     }
 
-    public static TypeEnum getEnumByValue(String value) {
+    public static LlmCodeEnum getEnumByValue(String value) {
         if (value == null) {
             return null;
         }
 
-        return Arrays.stream(TypeEnum.values())
+        return Arrays.stream(LlmCodeEnum.values())
                 .filter(v -> v.getValue().equals(value))
                 .findFirst()
                 .orElse(null);

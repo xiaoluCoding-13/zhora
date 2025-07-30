@@ -39,9 +39,9 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto  # 主键策略（auto=自增，assign_id=雪花ID）
-      logic-delete-field: deleted  # 逻辑删除字段（默认 deleted）
-      logic-delete-value: 1  # 逻辑删除值
-      logic-not-delete-value: 0  # 未删除值
+      logic-delete-field: del_flag  # 逻辑删除字段（默认 deleted）
+      logic-delete-value: true  # 逻辑删除值
+      logic-not-delete-value: false  # 未删除值
   mapper-locations: classpath:mapper/*.xml  # XML 映射文件路径（可选）
 
 

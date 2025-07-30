@@ -1,7 +1,7 @@
 package com.zhora.dto.ai;
 
-import com.zhora.enums.ai.CodeEnum;
-import com.zhora.enums.ai.TypeEnum;
+import com.zhora.enums.ai.LlmCodeEnum;
+import com.zhora.enums.ai.LlmTypeEnum;
 import lombok.Data;
 
 /**
@@ -10,7 +10,7 @@ import lombok.Data;
  * @date 2025/7/29 13:59
  */
 @Data
-public class AiConfigSearchDTO {
+public class AiLlmConfigSearchDTO {
     /**
      * id
      */
@@ -22,7 +22,7 @@ public class AiConfigSearchDTO {
     /**
      * 模型code
      */
-    private CodeEnum code;
+    private LlmCodeEnum code;
     /**
      * 模型名称
      */
@@ -30,7 +30,7 @@ public class AiConfigSearchDTO {
     /**
      * 模型类型
      */
-    private TypeEnum type;
+    private LlmTypeEnum type;
     /**
      * 模型秘钥
      */
@@ -48,7 +48,7 @@ public class AiConfigSearchDTO {
      */
     private Short priority;
     /**
-     * 删除状态[0-正常;1-逻辑删除]
+     * 删除标记,true:已删除,false:正常
      */
     private Boolean delFlag;
 }

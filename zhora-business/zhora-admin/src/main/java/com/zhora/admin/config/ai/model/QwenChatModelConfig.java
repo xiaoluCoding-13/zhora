@@ -8,7 +8,7 @@ import lombok.Data;
  * @date 2025/7/29 15:08
  */
 @Data
-public class DeepSeekChatModelConfig {
+public class QwenChatModelConfig {
 
     private String baseUrl;
 

@@ -1,21 +1,16 @@
-package com.zhora.entity.ai;
+package com.zhora.dto.ai;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.zhora.enums.ai.CodeEnum;
-import com.zhora.enums.ai.TypeEnum;
+import com.zhora.enums.ai.LlmCodeEnum;
+import com.zhora.enums.ai.LlmTypeEnum;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * 
  * @author zhehen.lu
- * @date 2025/7/29 14:02
+ * @date 2025/7/29 13:59
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@TableName("ai_config")
-public class AiConfigEntity extends BaseEntity {
+public class AiLlmConfigDTO {
     /**
      * id
      */
@@ -27,7 +22,7 @@ public class AiConfigEntity extends BaseEntity {
     /**
      * 模型code
      */
-    private CodeEnum code;
+    private LlmCodeEnum code;
     /**
      * 模型名称
      */
@@ -35,7 +30,7 @@ public class AiConfigEntity extends BaseEntity {
     /**
      * 模型类型
      */
-    private TypeEnum type;
+    private LlmTypeEnum type;
     /**
      * 模型秘钥
      */
@@ -52,10 +47,4 @@ public class AiConfigEntity extends BaseEntity {
      * 优先级
      */
     private Short priority;
-
-    /**
-     * 删除状态[0-正常;1-逻辑删除]
-     */
-    @TableLogic
-    private Boolean delFlag;
 }

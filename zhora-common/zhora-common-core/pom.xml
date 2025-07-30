@@ -51,6 +51,11 @@
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-open-ai-spring-boot-starter</artifactId>
         </dependency>
+        <!-- 阿里百炼 -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-community-dashscope-spring-boot-starter</artifactId>
+        </dependency>
         <!--解析pdf文档-->
         <dependency>
             <groupId>dev.langchain4j</groupId>

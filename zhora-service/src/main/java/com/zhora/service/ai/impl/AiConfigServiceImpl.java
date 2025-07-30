@@ -6,10 +6,10 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhora.common.utils.NumberUtil;
-import com.zhora.dto.ai.AiConfigDTO;
-import com.zhora.dto.ai.AiConfigSearchDTO;
-import com.zhora.entity.ai.AiConfigEntity;
-import com.zhora.enums.ai.TypeEnum;
+import com.zhora.dto.ai.AiLlmConfigDTO;
+import com.zhora.dto.ai.AiLlmConfigSearchDTO;
+import com.zhora.entity.ai.AiLlmConfigEntity;
+import com.zhora.enums.ai.LlmTypeEnum;
 import com.zhora.mapper.ai.AiConfigMapper;
 import com.zhora.service.ai.IAiConfigService;
 import org.apache.commons.lang3.StringUtils;
@@ -24,54 +24,54 @@ import java.util.Optional;
  * @date 2025/7/29 14:06
  */
 @Service
-public class AiConfigServiceImpl extends ServiceImpl<AiConfigMapper, AiConfigEntity> implements IAiConfigService {
+public class AiConfigServiceImpl extends ServiceImpl<AiConfigMapper, AiLlmConfigEntity> implements IAiConfigService {
 
     @Override
-    public AiConfigDTO getDetailById(Long id) {
-        AiConfigSearchDTO searchDTO = new AiConfigSearchDTO();
+    public AiLlmConfigDTO getDetailById(Long id) {
+        AiLlmConfigSearchDTO searchDTO = new AiLlmConfigSearchDTO();
         searchDTO.setDelFlag(Boolean.FALSE);
         return getDetail(searchDTO);
     }
 
     @Override
-    public AiConfigDTO getDetail(AiConfigSearchDTO searchDTO) {
+    public AiLlmConfigDTO getDetail(AiLlmConfigSearchDTO searchDTO) {
         searchDTO.setDelFlag(Boolean.FALSE);
-        LambdaQueryWrapper<AiConfigEntity> wrapper = getWrapper(searchDTO);
-        AiConfigEntity entity = this.getOne(wrapper);
-        return BeanUtil.copyProperties(entity, AiConfigDTO.class);
+        LambdaQueryWrapper<AiLlmConfigEntity> wrapper = getWrapper(searchDTO);
+        AiLlmConfigEntity entity = this.getOne(wrapper);
+        return BeanUtil.copyProperties(entity, AiLlmConfigDTO.class);
     }
 
-    public Optional<AiConfigEntity> getPrecedenceChatLlmBy(Boolean enable) {
-        AiConfigSearchDTO searchDTO = new AiConfigSearchDTO();
+    public Optional<AiLlmConfigEntity> getPrecedenceChatLlmBy(Boolean enable) {
+        AiLlmConfigSearchDTO searchDTO = new AiLlmConfigSearchDTO();
         searchDTO.setEnable(enable);
         searchDTO.setDelFlag(Boolean.FALSE);
 
-        List<AiConfigEntity> aiConfigEntityList = list(getWrapper(searchDTO));
-        return aiConfigEntityList.stream()
-                .filter(aiLlmConfig -> TypeEnum.CHAT.equals(aiLlmConfig.getType()))
-                .max(Comparator.comparingInt(AiConfigEntity::getPriority));
+        List<AiLlmConfigEntity> aiLlmConfigEntityList = list(getWrapper(searchDTO));
+        return aiLlmConfigEntityList.stream()
+                .filter(aiLlmConfig -> LlmTypeEnum.CHAT.equals(aiLlmConfig.getType()))
+                .max(Comparator.comparingInt(AiLlmConfigEntity::getPriority));
     }
 
     /**
      * 获取wrapper
      *
      * @param searchDTO
-     * @return {@link LambdaQueryChainWrapper< AiConfigEntity>}
+     * @return {@link LambdaQueryChainWrapper<  AiLlmConfigEntity >}
      * @date 2025/7/28 23:03
      * @author zhehen.lu
      */
-    private LambdaQueryWrapper<AiConfigEntity> getWrapper(AiConfigSearchDTO searchDTO) {
-        LambdaQueryWrapper<AiConfigEntity> wrapper = Wrappers.lambdaQuery();
+    private LambdaQueryWrapper<AiLlmConfigEntity> getWrapper(AiLlmConfigSearchDTO searchDTO) {
+        LambdaQueryWrapper<AiLlmConfigEntity> wrapper = Wrappers.lambdaQuery();
         return wrapper
-                .eq(NumberUtil.isGtZero(searchDTO.getId()), AiConfigEntity::getId, searchDTO.getId())
-                .eq(StringUtils.isNotEmpty(searchDTO.getName()), AiConfigEntity::getName, searchDTO.getName())
-                .eq(null != searchDTO.getCode(), AiConfigEntity::getCode, searchDTO.getCode())
-                .eq(StringUtils.isNotEmpty(searchDTO.getModelName()), AiConfigEntity::getModelName, searchDTO.getModelName())
-                .eq(null != searchDTO.getType(), AiConfigEntity::getType, searchDTO.getType())
-                .eq(StringUtils.isNotEmpty(searchDTO.getApiKey()), AiConfigEntity::getApiKey, searchDTO.getApiKey())
-                .eq(StringUtils.isNotEmpty(searchDTO.getUrl()), AiConfigEntity::getUrl, searchDTO.getUrl())
-                .eq(null != searchDTO.getEnable(), AiConfigEntity::getEnable, searchDTO.getEnable())
-                .eq(null != searchDTO.getPriority(), AiConfigEntity::getPriority, searchDTO.getPriority())
+                .eq(NumberUtil.isGtZero(searchDTO.getId()), AiLlmConfigEntity::getId, searchDTO.getId())
+                .eq(StringUtils.isNotEmpty(searchDTO.getName()), AiLlmConfigEntity::getName, searchDTO.getName())
+                .eq(null != searchDTO.getCode(), AiLlmConfigEntity::getCode, searchDTO.getCode())
+                .eq(StringUtils.isNotEmpty(searchDTO.getModelName()), AiLlmConfigEntity::getModelName, searchDTO.getModelName())
+                .eq(null != searchDTO.getType(), AiLlmConfigEntity::getType, searchDTO.getType())
+                .eq(StringUtils.isNotEmpty(searchDTO.getApiKey()), AiLlmConfigEntity::getApiKey, searchDTO.getApiKey())
+                .eq(StringUtils.isNotEmpty(searchDTO.getUrl()), AiLlmConfigEntity::getUrl, searchDTO.getUrl())
+                .eq(null != searchDTO.getEnable(), AiLlmConfigEntity::getEnable, searchDTO.getEnable())
+                .eq(null != searchDTO.getPriority(), AiLlmConfigEntity::getPriority, searchDTO.getPriority())
                 ;
     }
 

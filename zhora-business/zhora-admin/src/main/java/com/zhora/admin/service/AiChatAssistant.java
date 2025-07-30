@@ -1,4 +1,4 @@
-package com.zhora.admin.config.ai;
+package com.zhora.admin.service;
 
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.TokenStream;

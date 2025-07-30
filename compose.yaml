@@ -1,0 +1,14 @@
+services:
+  database:
+    image: 'pgvector/pgvector:pg17'
+    container_name: database
+    hostname: database
+    environment:
+      POSTGRES_DB: zhora
+      POSTGRES_USER: zhora
+      POSTGRES_PASSWORD: zhora
+    ports:
+      - 15432:5432
+    volumes:
+      - /var/lib/postgresql/data:/var/lib/postgresql/data
+    restart: always

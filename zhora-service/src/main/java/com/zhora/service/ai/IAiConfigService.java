@@ -1,9 +1,9 @@
 package com.zhora.service.ai;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhora.dto.ai.AiConfigDTO;
-import com.zhora.dto.ai.AiConfigSearchDTO;
-import com.zhora.entity.ai.AiConfigEntity;
+import com.zhora.dto.ai.AiLlmConfigDTO;
+import com.zhora.dto.ai.AiLlmConfigSearchDTO;
+import com.zhora.entity.ai.AiLlmConfigEntity;
 
 import java.util.Optional;
 
@@ -12,11 +12,11 @@ import java.util.Optional;
  * @author zhehen.lu
  * @date 2025/7/29 14:04
  */
-public interface IAiConfigService extends IService<AiConfigEntity> {
+public interface IAiConfigService extends IService<AiLlmConfigEntity> {
 
-    AiConfigDTO getDetailById(Long id);
+    AiLlmConfigDTO getDetailById(Long id);
 
-    AiConfigDTO getDetail(AiConfigSearchDTO searchDTO);
+    AiLlmConfigDTO getDetail(AiLlmConfigSearchDTO searchDTO);
 
-    Optional<AiConfigEntity> getPrecedenceChatLlmBy(Boolean enable);
+    Optional<AiLlmConfigEntity> getPrecedenceChatLlmBy(Boolean enable);
 }
