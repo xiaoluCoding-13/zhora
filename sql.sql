@@ -43,9 +43,9 @@ COMMENT ON TABLE "public"."ai_llm_config" IS '模型配置';
 -- Records of ai_llm_config
 -- ----------------------------
 BEGIN;
-INSERT INTO "public"."ai_llm_config" ("id", "name", "code", "model_name", "type", "api_key", "url", "enable", "priority", "create_by", "create_time", "update_by", "update_time", "del_flag") VALUES (1, 'DeepSeek', 'DEEP_SEEK', 'deepseek-chat', 'CHAT', 'sk-049b7f9b70854c8f89049fe9c48e76c4', 'https://api.deepseek.com', 'f', 0, NULL, NULL, NULL, NULL, 'f');
-INSERT INTO "public"."ai_llm_config" ("id", "name", "code", "model_name", "type", "api_key", "url", "enable", "priority", "create_by", "create_time", "update_by", "update_time", "del_flag") VALUES (2, 'Qwen', 'Q_WEN', 'qwen3-32b', 'CHAT', 'sk-5ce588ae5fb4405abd51ed09eb77e167	', 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation', 't', 1, NULL, NULL, NULL, NULL, 'f');
-INSERT INTO "public"."ai_llm_config" ("id", "name", "code", "model_name", "type", "api_key", "url", "enable", "priority", "create_by", "create_time", "update_by", "update_time", "del_flag") VALUES (3, 'Qwen_embedding', 'Q_WEN_EMBEDDING', 'text-embedding-v4', 'EMBEDDING', 'sk-5ce588ae5fb4405abd51ed09eb77e167	', 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation', 't', 2, NULL, NULL, NULL, NULL, 'f');
+INSERT INTO "public"."ai_llm_config" ("id", "name", "code", "model_name", "type", "api_key", "url", "enable", "priority", "create_by", "create_time", "update_by", "update_time", "del_flag") VALUES (1, 'DeepSeek', 'DEEP_SEEK', 'deepseek-chat', 'CHAT', '', 'https://api.deepseek.com', 'f', 0, NULL, NULL, NULL, NULL, 'f');
+INSERT INTO "public"."ai_llm_config" ("id", "name", "code", "model_name", "type", "api_key", "url", "enable", "priority", "create_by", "create_time", "update_by", "update_time", "del_flag") VALUES (2, 'Qwen', 'Q_WEN', 'qwen3-32b', 'CHAT', '', 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation', 't', 1, NULL, NULL, NULL, NULL, 'f');
+INSERT INTO "public"."ai_llm_config" ("id", "name", "code", "model_name", "type", "api_key", "url", "enable", "priority", "create_by", "create_time", "update_by", "update_time", "del_flag") VALUES (3, 'Qwen_embedding', 'Q_WEN_EMBEDDING', 'text-embedding-v4', 'EMBEDDING', '', 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation', 't', 2, NULL, NULL, NULL, NULL, 'f');
 COMMIT;
 
 -- ----------------------------
