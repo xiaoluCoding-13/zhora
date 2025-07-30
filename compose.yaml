@@ -1,8 +1,8 @@
 services:
-  database:
+  zhora-database:
     image: 'pgvector/pgvector:pg17'
-    container_name: database
-    hostname: database
+    container_name: zhora-database
+    hostname: zhora-database
     environment:
       POSTGRES_DB: zhora
       POSTGRES_USER: zhora

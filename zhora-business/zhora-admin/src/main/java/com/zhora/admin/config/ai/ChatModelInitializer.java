@@ -7,7 +7,7 @@ import com.zhora.admin.service.AiChatAssistant;
 import com.zhora.dto.ai.AiLlmConfigDTO;
 import com.zhora.dto.ai.AiLlmConfigSearchDTO;
 import com.zhora.enums.ai.LlmCodeEnum;
-import com.zhora.service.ai.IAiConfigService;
+import com.zhora.service.ai.IAiLlmConfigService;
 import dev.langchain4j.community.model.dashscope.QwenStreamingChatModel;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class ChatModelInitializer {
 
-    private final IAiConfigService aiConfigService;
+    private final IAiLlmConfigService aiLlmConfigService;
     private final PromptConfiguration promptConfiguration;
 
     @Bean
@@ -51,7 +51,7 @@ public class ChatModelInitializer {
 
         AiLlmConfigSearchDTO searchDTO = new AiLlmConfigSearchDTO();
         searchDTO.setCode(LlmCodeEnum.DEEP_SEEK);
-        AiLlmConfigDTO deepSeek = aiConfigService.getDetail(searchDTO);
+        AiLlmConfigDTO deepSeek = aiLlmConfigService.getDetail(searchDTO);
         deepSeekChatModelConfig.init(deepSeek);
         return deepSeekChatModelConfig;
     }
@@ -59,7 +59,6 @@ public class ChatModelInitializer {
     @Bean
     public QwenStreamingChatModel qwenChatModel(QwenChatModelConfig qwenChatModelConfig) {
         return QwenStreamingChatModel.builder()
-//                .baseUrl(qwenChatModelConfig.getBaseUrl())
                 .apiKey(qwenChatModelConfig.getApiKey())
                 .modelName(qwenChatModelConfig.getModelName())
                 .build();
@@ -80,7 +79,7 @@ public class ChatModelInitializer {
 
         AiLlmConfigSearchDTO searchDTO = new AiLlmConfigSearchDTO();
         searchDTO.setCode(LlmCodeEnum.Q_WEN);
-        AiLlmConfigDTO deepSeek = aiConfigService.getDetail(searchDTO);
+        AiLlmConfigDTO deepSeek = aiLlmConfigService.getDetail(searchDTO);
         qwenChatModelConfig.init(deepSeek);
         return qwenChatModelConfig;
     }

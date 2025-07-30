@@ -1,6 +1,3 @@
-CREATE TYPE llm_code_enum AS ENUM ('DEEP_SEEK', 'Q_WEN', 'Q_WEN_EMBEDDING');
-CREATE TYPE llm_type_enum AS ENUM ('LLM', 'CHAT', 'EMBEDDING');
-
 -- ----------------------------
 -- Table structure for ai_llm_config
 -- ----------------------------
@@ -52,3 +49,58 @@ COMMIT;
 -- Primary Key structure for table ai_llm_config
 -- ----------------------------
 ALTER TABLE "public"."ai_llm_config" ADD CONSTRAINT "ai_config_pkey" PRIMARY KEY ("id");
+
+CREATE SCHEMA IF NOT EXISTS zhora;
+
+DROP TABLE IF EXISTS "public"."qwen_embedding_store";
+CREATE TABLE "public"."qwen_embedding_store" (
+    "embedding_id" uuid NOT NULL,
+    "embedding" "public"."vector",
+    "text" text COLLATE "pg_catalog"."default",
+    "metadata" json,
+    "create_by" varchar(64) COLLATE "pg_catalog"."default",
+    "create_time" timestamp(6),
+    "update_by" varchar(64) COLLATE "pg_catalog"."default",
+    "update_time" timestamp(6),
+    "del_flag" bool DEFAULT false
+)
+;
+ALTER TABLE "public"."qwen_embedding_store" OWNER TO "zhora";
+COMMENT ON COLUMN "public"."qwen_embedding_store"."create_by" IS '创建人';
+COMMENT ON COLUMN "public"."qwen_embedding_store"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."qwen_embedding_store"."update_by" IS '更新人';
+COMMENT ON COLUMN "public"."qwen_embedding_store"."update_time" IS '更新时间';
+COMMENT ON COLUMN "public"."qwen_embedding_store"."del_flag" IS '删除标记,true:已删除,false:正常';
+
+-- ----------------------------
+-- Table structure for qwen_library_embedding_store
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."qwen_library_embedding_store";
+CREATE TABLE "public"."qwen_library_embedding_store" (
+    "embedding_id" uuid NOT NULL,
+    "embedding" "public"."vector",
+    "text" text COLLATE "pg_catalog"."default",
+    "metadata" json,
+    "create_by" varchar(64) COLLATE "pg_catalog"."default",
+    "create_time" timestamp(6),
+    "update_by" varchar(64) COLLATE "pg_catalog"."default",
+    "update_time" timestamp(6),
+    "del_flag" bool DEFAULT false
+)
+;
+ALTER TABLE "public"."qwen_library_embedding_store" OWNER TO "zhora";
+COMMENT ON COLUMN "public"."qwen_library_embedding_store"."create_by" IS '创建人';
+COMMENT ON COLUMN "public"."qwen_library_embedding_store"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."qwen_library_embedding_store"."update_by" IS '更新人';
+COMMENT ON COLUMN "public"."qwen_library_embedding_store"."update_time" IS '更新时间';
+COMMENT ON COLUMN "public"."qwen_library_embedding_store"."del_flag" IS '删除标记,true:已删除,false:正常';
+
+-- ----------------------------
+-- Primary Key structure for table qwen_embedding_store
+-- ----------------------------
+ALTER TABLE "public"."qwen_embedding_store" ADD CONSTRAINT "qwen_embedding_store_pkey" PRIMARY KEY ("embedding_id");
+
+-- ----------------------------
+-- Primary Key structure for table qwen_library_embedding_store
+-- ----------------------------
+ALTER TABLE "public"."qwen_library_embedding_store" ADD CONSTRAINT "qwen_library_embedding_store_pkey" PRIMARY KEY ("embedding_id");

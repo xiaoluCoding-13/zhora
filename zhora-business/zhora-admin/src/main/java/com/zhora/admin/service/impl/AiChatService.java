@@ -6,7 +6,7 @@ import com.zhora.admin.service.SystemToolAssistant;
 import com.zhora.common.exception.ServiceException;
 import com.zhora.entity.ai.AiLlmConfigEntity;
 import com.zhora.enums.ai.LlmCodeEnum;
-import com.zhora.service.ai.IAiConfigService;
+import com.zhora.service.ai.IAiLlmConfigService;
 import dev.langchain4j.service.TokenStream;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +25,14 @@ import java.util.Optional;
 public class AiChatService {
 
     @Autowired
-    private IAiConfigService aiConfigService;
+    private IAiLlmConfigService aiConfigService;
 
-    @Qualifier("deepSeekChatAssistant")
     @Autowired
+    @Qualifier("deepSeekChatAssistant")
     private AiChatAssistant deepSeekChatAssistant;
 
-    @Qualifier("qwenChatAssistant")
     @Autowired
+    @Qualifier("qwenChatAssistant")
     private AiChatAssistant qwenChatAssistant;
 
     @Autowired

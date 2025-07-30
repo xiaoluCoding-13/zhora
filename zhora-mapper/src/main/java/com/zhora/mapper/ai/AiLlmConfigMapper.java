@@ -10,6 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2025/7/29 13:58
  */
 @Mapper
-public interface AiConfigMapper extends BaseMapper<AiLlmConfigEntity> {
+public interface AiLlmConfigMapper extends BaseMapper<AiLlmConfigEntity> {
 
 }

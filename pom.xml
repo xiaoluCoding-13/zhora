@@ -168,7 +168,8 @@
 				<version>${langchain4j.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency><!--解析pdf文档-->
+			</dependency>
+			<!--解析pdf文档-->
 			<dependency>
 				<groupId>dev.langchain4j</groupId>
 				<artifactId>langchain4j-document-parser-apache-pdfbox</artifactId>
@@ -195,6 +196,11 @@
 				<groupId>dev.langchain4j</groupId>
 				<artifactId>langchain4j-redis</artifactId>
 				<version>1.0.0-alpha1</version>
+			</dependency>
+			<dependency>
+				<groupId>dev.langchain4j</groupId>
+				<artifactId>langchain4j-pgvector</artifactId>
+				<version>${langchain4j-beta7.version}</version>
 			</dependency>
 
 			<dependency>

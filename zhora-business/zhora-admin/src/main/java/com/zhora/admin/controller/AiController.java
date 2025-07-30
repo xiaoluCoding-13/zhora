@@ -2,9 +2,13 @@ package com.zhora.admin.controller;
 
 import com.zhora.admin.domain.ai.ChatDto;
 import com.zhora.admin.service.impl.AiChatService;
+import com.zhora.admin.service.impl.RagService;
 import com.zhora.common.dto.ResponseDTO;
-import com.zhora.entity.ai.AiLlmConfigEntity;
-import com.zhora.service.ai.IAiConfigService;
+import com.zhora.common.exception.ServiceException;
+import com.zhora.dto.ai.AiLlmConfigDTO;
+import com.zhora.dto.ai.AiLlmConfigSearchDTO;
+import com.zhora.enums.ai.LlmCodeEnum;
+import com.zhora.service.ai.IAiLlmConfigService;
 import dev.langchain4j.service.TokenStream;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +19,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
 import java.time.Duration;
-import java.util.Optional;
+import java.util.Map;
 
 /**
  * @author zhehen.lu
@@ -26,21 +30,20 @@ import java.util.Optional;
 @RequestMapping("/ai")
 @Slf4j
 public class AiController {
+
     @Autowired
-    private IAiConfigService aiConfigService;
+    private IAiLlmConfigService aiLlmConfigService;
 
     @Autowired
     private AiChatService aiChatService;
 
-    @GetMapping("/getPrecedenceChatLlmBy")
-    public ResponseDTO<Optional<AiLlmConfigEntity>> getPrecedenceChatLlmBy() {
-        return ResponseDTO.success(aiConfigService.getPrecedenceChatLlmBy(true));
-    }
+    @Autowired
+    private RagService ragService;
 
     @PostMapping(value = "/action/execute", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> actionExecute(@RequestBody String userMessage) {
         Sinks.Many<String> sink = Sinks.many().unicast().onBackpressureBuffer();
-        TokenStream chat = aiChatService.actionPrecedenceExecuteWith("用户ID123456",userMessage);
+        TokenStream chat = aiChatService.actionPrecedenceExecuteWith("用户ID123456", userMessage);
         chat.onPartialResponse(
                         (text) -> {
                             log.debug("ai 响应结果: {}", text);
@@ -81,6 +84,17 @@ public class AiController {
                 .onError(sink::tryEmitError)
                 .start();
         return sink.asFlux().timeout(Duration.ofSeconds(120));
+    }
+
+    @PostMapping("/action/search")
+    public Map<String, String> searchAction(@RequestBody String message) {
+        AiLlmConfigSearchDTO searchDTO = new AiLlmConfigSearchDTO();
+        searchDTO.setCode(LlmCodeEnum.Q_WEN);
+        AiLlmConfigDTO aiLlmConfig = aiLlmConfigService.getDetail(searchDTO);
+        if (!aiLlmConfig.getEnable()) {
+            throw new ServiceException("命令模型未启用，请开启后再试。");
+        }
+        return ragService.searchAction(message);
     }
 
     @PostMapping("/chat/refresh")

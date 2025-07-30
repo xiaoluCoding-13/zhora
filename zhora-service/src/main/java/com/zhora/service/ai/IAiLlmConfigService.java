@@ -12,7 +12,7 @@ import java.util.Optional;
  * @author zhehen.lu
  * @date 2025/7/29 14:04
  */
-public interface IAiConfigService extends IService<AiLlmConfigEntity> {
+public interface IAiLlmConfigService extends IService<AiLlmConfigEntity> {
 
     AiLlmConfigDTO getDetailById(Long id);
 

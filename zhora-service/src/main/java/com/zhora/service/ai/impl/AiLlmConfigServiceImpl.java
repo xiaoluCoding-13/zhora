@@ -10,8 +10,8 @@ import com.zhora.dto.ai.AiLlmConfigDTO;
 import com.zhora.dto.ai.AiLlmConfigSearchDTO;
 import com.zhora.entity.ai.AiLlmConfigEntity;
 import com.zhora.enums.ai.LlmTypeEnum;
-import com.zhora.mapper.ai.AiConfigMapper;
-import com.zhora.service.ai.IAiConfigService;
+import com.zhora.mapper.ai.AiLlmConfigMapper;
+import com.zhora.service.ai.IAiLlmConfigService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ import java.util.Optional;
  * @date 2025/7/29 14:06
  */
 @Service
-public class AiConfigServiceImpl extends ServiceImpl<AiConfigMapper, AiLlmConfigEntity> implements IAiConfigService {
+public class AiLlmConfigServiceImpl extends ServiceImpl<AiLlmConfigMapper, AiLlmConfigEntity> implements IAiLlmConfigService {
 
     @Override
     public AiLlmConfigDTO getDetailById(Long id) {
