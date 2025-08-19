@@ -1,5 +1,6 @@
 package com.zhora.admin.config.ai;
 
+import com.zhora.admin.component.UserRolePermissionOperatorTool;
 import com.zhora.admin.service.SystemToolAssistant;
 import dev.langchain4j.community.model.dashscope.QwenStreamingChatModel;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
@@ -13,12 +14,14 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class ToolsInitializer {
 
+  private final UserRolePermissionOperatorTool userRolePermissionOperatorTool;
+
   @Bean
   public SystemToolAssistant deepSeekToolAssistant(OpenAiStreamingChatModel deepSeekChatModel) {
     return AiServices.builder(SystemToolAssistant.class)
         .streamingChatModel(deepSeekChatModel)
         .chatMemoryProvider(memoryId -> MessageWindowChatMemory.withMaxMessages(10))
-//        .tools(userRolePermissionOperatorTool, departmentOperatorTool, positionOperatorTool)
+        .tools(userRolePermissionOperatorTool)
         .build();
   }
 
@@ -27,7 +30,7 @@ public class ToolsInitializer {
     return AiServices.builder(SystemToolAssistant.class)
             .streamingChatModel(qwenStreamingChatModel)
             .chatMemoryProvider(memoryId -> MessageWindowChatMemory.withMaxMessages(10))
-//        .tools(userRolePermissionOperatorTool, departmentOperatorTool, positionOperatorTool)
+        .tools(userRolePermissionOperatorTool)
             .build();
   }
 }

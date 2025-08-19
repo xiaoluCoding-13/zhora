@@ -51,7 +51,6 @@ knife4j:
   setting:
     language: zh-CN  # 中文界面
     enable-swagger-default: false  # 禁用原生 Swagger UI
-
 # 防止XSS攻击
 xss:
   # 过滤开关
@@ -60,3 +59,15 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+springdoc:
+  api-docs:
+    # 是否开启接口文档
+    enabled: true
+  swagger-ui:
+    # 持久化认证数据
+    persistAuthorization: true
+  #这里定义了分组，可定义多个，也可以不定义
+  group-configs:
+    - group: 1.业务模块
+      packages-to-scan: com.zhora.admin.controller
