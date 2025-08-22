@@ -122,15 +122,9 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.postgresql</groupId>
-				<artifactId>postgresql</artifactId>
-				<version>${postgresql.version}</version>
-			</dependency>
-			<!--mybatis-plus 持久层-->
-			<dependency>
-				<groupId>com.baomidou</groupId>
-				<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
-				<version>${mybatis-plus.version}</version>
+				<groupId>com.lzh</groupId>
+				<artifactId>lzh-21-db-spring-boot-starter</artifactId>
+				<version>1.0.0</version>
 			</dependency>
 
 			<!-- 前后端分离中的后端接口测试工具 -->

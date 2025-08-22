@@ -7,7 +7,7 @@ import com.zhora.common.utils.StringUtils;
 /**
  * 基础异常
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class BaseException extends RuntimeException
 {

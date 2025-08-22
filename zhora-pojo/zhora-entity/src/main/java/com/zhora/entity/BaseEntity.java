@@ -1,8 +1,7 @@
-package com.zhora.entity.ai;
+package com.zhora.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -15,7 +14,7 @@ import java.util.Map;
 /**
  * @author zhehen.lu
  * Entity基类
- * @date 2025/7/29 14:00
+ * @date 2025/8/22 14:00
  */
 @Data
 public class BaseEntity implements Serializable {

@@ -1,6 +1,7 @@
-package com.zhora.dto.system;
+package com.zhora.dto.system.search;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.zhora.db.common.dto.PageBaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -14,7 +15,7 @@ import java.util.Date;
  */
 @Data
 @Schema(name = "SysUserDTO",description = "用户信息搜索模型")
-public class SysUserSearchDTO {
+public class SysUserSearchDTO extends PageBaseDTO {
     /** 用户ID */
     private Long userId;
 

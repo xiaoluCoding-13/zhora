@@ -69,5 +69,7 @@ springdoc:
     persistAuthorization: true
   #这里定义了分组，可定义多个，也可以不定义
   group-configs:
-    - group: 1.业务模块
-      packages-to-scan: com.zhora.admin.controller
+    - group: 1.ai模块
+      packages-to-scan: com.zhora.admin.controller.ai
+    - group: 2.系统模块
+      packages-to-scan: com.zhora.admin.controller.system

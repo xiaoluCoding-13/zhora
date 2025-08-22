@@ -1,9 +1,9 @@
-package com.ykyy.ec.db.util;
+package com.zhora.db.common.util;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.ykyy.ec.common.page.PageDataGridRespDTO;
-import com.ykyy.ec.common.util.ConvertUtil;
-import org.apache.commons.collections.CollectionUtils;
+import com.zhora.common.dto.page.PageDataGridRespDTO;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ import java.util.List;
 /**
  * @Classname PageDataGridRespUtil
  * @Description 分页数据处理工具 只针对IPage类做处理
- * @date 2022/7/4 11:22
- * @Created by sherlock
+ * @date 2025/8/22 11:22
+ * @Created by zhehen.lu
  */
 public class PageDataGridRespUtil {
     /**
@@ -21,7 +21,7 @@ public class PageDataGridRespUtil {
      * @param sClass 需要转换的class
      * @return {@link PageDataGridRespDTO<T>}
      * @date 2023/2/10 16:05
-     * @author sherlock
+     * @author zhehen.lu
      */
     public static <T> PageDataGridRespDTO<T> convert(IPage iPage, Class<T> sClass) {
         if (iPage == null) {
@@ -31,7 +31,7 @@ public class PageDataGridRespUtil {
         return CollectionUtils.isEmpty(iPage.getRecords()) ?
                 convert(iPage, new ArrayList<>()) :
                 new PageDataGridRespDTO<T>(iPage.getTotal(), iPage.getCurrent(),
-                        iPage.getSize(), ConvertUtil.convertList(iPage.getRecords(), sClass));
+                        iPage.getSize(), BeanUtil.copyToList(iPage.getRecords(), sClass));
     }
 
     /**
@@ -39,7 +39,7 @@ public class PageDataGridRespUtil {
      * @param iPage mybatis-plus分页数据
      * @return {@link PageDataGridRespDTO<T>}
      * @date 2023/2/10 16:06
-     * @author sherlock
+     * @author zhehen.lu
      */
     public static<T> PageDataGridRespDTO<T> convert(IPage<T> iPage) {
         if (iPage == null) {
@@ -55,7 +55,7 @@ public class PageDataGridRespUtil {
      * @param data 分页的list需要替换的数据
      * @return {@link PageDataGridRespDTO<T>}
      * @date 2023/2/10 16:06
-     * @author sherlock
+     * @author zhehen.lu
      */
     public static<T> PageDataGridRespDTO<T> convert(IPage iPage, List<T> data) {
         return new PageDataGridRespDTO<T>(iPage.getTotal(), iPage.getCurrent(), iPage.getSize(), data);

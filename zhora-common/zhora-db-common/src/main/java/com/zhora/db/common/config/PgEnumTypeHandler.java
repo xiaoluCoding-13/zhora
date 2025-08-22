@@ -11,7 +11,7 @@ import java.sql.SQLException;
 /**
  * pg枚举值转换
  * @author zhehen.lu
- * @date 2025/7/30 15:45
+ * @date 2025/8/22 15:45
  */
 public class PgEnumTypeHandler<E extends Enum<E>> extends BaseTypeHandler<E> {
     private final Class<E> type;

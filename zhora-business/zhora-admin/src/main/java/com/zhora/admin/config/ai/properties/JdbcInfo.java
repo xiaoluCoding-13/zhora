@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * @author zhehen.lu
- * @date 2025/7/30 21:13
+ * @date 2025/8/22 21:13
  */
 @Data
 public class JdbcInfo {

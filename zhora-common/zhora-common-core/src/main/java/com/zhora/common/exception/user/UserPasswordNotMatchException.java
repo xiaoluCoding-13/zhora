@@ -3,7 +3,7 @@ package com.zhora.common.exception.user;
 /**
  * 用户密码不正确或不符合规范异常类
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class UserPasswordNotMatchException extends UserException
 {

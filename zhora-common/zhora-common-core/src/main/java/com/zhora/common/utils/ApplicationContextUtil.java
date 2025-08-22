@@ -1,4 +1,4 @@
-package com.ykyy.ec.common.util;
+package com.zhora.common.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -13,8 +13,8 @@ import java.util.Map;
 /**
  * 获取应用上下文
  *
- * @author by sherlock
- * @Date 2022/11/1 19:00
+ * @author by zhehen.lu
+ * @Date 2025/8/22 19:00
  */
 @Component
 public class ApplicationContextUtil implements ApplicationContextAware {
@@ -31,7 +31,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
     /**
      * 获取应用上下文
      * @return {@link ApplicationContext}
-     * @date  2022/8/26 15:27
+     * @date  2025/8/22 15:27
      * @author zsx
      */
     public static ApplicationContext getApplicationContext() {
@@ -42,7 +42,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
      * 通过name获取 Bean.
      * @param name bean名称
      * @return {@link Object}
-     * @date  2022/8/26 15:28
+     * @date  2025/8/22 15:28
      * @author zsx
      */
     public static Object getBean(String name) {
@@ -53,7 +53,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
      * 通过bean类型获取Bean.
      * @param clazz bean类型
      * @return {@link T}
-     * @date  2022/8/26 15:28
+     * @date  2025/8/22 15:28
      * @author zsx
      */
     public static <T> T getBean(Class<T> clazz) {
@@ -65,7 +65,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
      * @param name bean名称
      * @param clazz bean类型
      * @return {@link T}
-     * @date  2022/8/26 15:25
+     * @date  2025/8/22 15:25
      * @author zsx
      */
     public static <T> T getBean(String name, Class<T> clazz) {
@@ -77,7 +77,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
      * 根据bean类型获取bean列表
      * @param clazz bean类型
      * @return {@link List <T>}
-     * @date  2022/8/26 15:24
+     * @date  2025/8/22 15:24
      * @author zsx
      */
     public static <T> List<T> getBeans(Class<T> clazz) {
@@ -91,7 +91,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
     /**
      * 获取当前应用名
      * @return {@link String}
-     * @date  2022/8/26 15:24
+     * @date  2025/8/22 15:24
      * @author zsx
      */
     public static String getAppName(){

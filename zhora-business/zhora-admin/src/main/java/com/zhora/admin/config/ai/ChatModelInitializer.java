@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author zhehen.lu
- * @date 2025/7/29 15:07
+ * @date 2025/8/22 15:07
  */
 @Configuration
 @RequiredArgsConstructor

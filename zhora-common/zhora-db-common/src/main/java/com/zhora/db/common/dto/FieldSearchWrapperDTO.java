@@ -1,4 +1,4 @@
-package com.ykyy.ec.db.dto;
+package com.zhora.db.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 /**
  * 字段属性查询包装增强
  *
- * @author by sherlock
+ * @author by zhehen.lu
  * @date 2023/8/23 9:03
  */
 @Data
@@ -26,9 +26,10 @@ public class FieldSearchWrapperDTO<T> {
 
     /**
      * 操作枚举类
+     *
+     * @author zhehen.lu
      * @return {@link null}
      * @date 2023/8/23 9:05
-     * @author sherlock
      */
     public enum OperateTypeEnum {
         EQ,
@@ -37,7 +38,6 @@ public class FieldSearchWrapperDTO<T> {
         GT,
         GTE,
         LT,
-        LTE
-        ;
+        LTE;
     }
 }

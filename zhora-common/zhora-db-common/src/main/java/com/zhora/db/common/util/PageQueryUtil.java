@@ -1,12 +1,12 @@
-package com.ykyy.ec.db.util;
+package com.zhora.db.common.util;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ykyy.db.properties.MybatisPlusAutoFillProperties;
-import com.ykyy.ec.common.util.ApplicationContextUtil;
-import com.ykyy.ec.db.dto.PageBaseDTO;
+import com.lzh.db.properties.MybatisPlusAutoFillProperties;
+import com.zhora.common.utils.ApplicationContextUtil;
+import com.zhora.db.common.dto.PageBaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,8 +23,8 @@ import java.util.Optional;
 /**
  * @Classname PageQueryUtil
  * @Description 页面查询工具
- * @date 2022/7/19 16:01
- * @Created by sherlock
+ * @date 2025/8/22 16:01
+ * @Created by zhehen.lu
  */
 @AllArgsConstructor
 @Builder
@@ -40,14 +40,14 @@ public class PageQueryUtil<T, S extends PageBaseDTO> {
      */
     @Getter
     @Setter
-    private Long page=1L;
+    private Long page = 1L;
 
     /**
      * 一页读取大小
      */
     @Getter
     @Setter
-    private Long pageSize=10L;
+    private Long pageSize = 10L;
 
     /**
      * 是否查询count
@@ -96,10 +96,11 @@ public class PageQueryUtil<T, S extends PageBaseDTO> {
 
     /**
      * 构建分页对象
+     *
      * @param
      * @return {@link IPage<T>}
      * @date 2023/1/31 10:38
-     * @author sherlock
+     * @author zhehen.lu
      */
     public IPage<T> buildPageObj() {
         Page<T> pageObj = new Page<>(page, pageSize);
@@ -186,9 +187,10 @@ public class PageQueryUtil<T, S extends PageBaseDTO> {
 
     /**
      * 设置分页的信息
+     *
      * @param pageBaseReq
      * @date 2023/1/31 10:38
-     * @author sherlock
+     * @author zhehen.lu
      */
     public void setPageBaseReq(S pageBaseReq) {
         page = pageBaseReq.getPage();
@@ -199,9 +201,10 @@ public class PageQueryUtil<T, S extends PageBaseDTO> {
 
     /**
      * 设置排序
+     *
      * @param orderItem
      * @date 2023/1/31 10:39
-     * @author sherlock
+     * @author zhehen.lu
      */
     public void setOrderItem(OrderItem orderItem) {
         orderList.add(orderItem);
@@ -209,10 +212,11 @@ public class PageQueryUtil<T, S extends PageBaseDTO> {
 
     /**
      * 设置排序
+     *
      * @param orderField
      * @param isAsc
      * @date 2023/1/31 10:39
-     * @author sherlock
+     * @author zhehen.lu
      */
     public void setOrderItem(String orderField, Boolean isAsc) {
         OrderItem orderItem = new OrderItem();
@@ -223,10 +227,11 @@ public class PageQueryUtil<T, S extends PageBaseDTO> {
 
     /**
      * 是否传入pageBaseReq 有排序字段
+     *
      * @param
      * @return {@link boolean}
      * @date 2023/1/31 13:39
-     * @author sherlock
+     * @author zhehen.lu
      */
     private boolean isPageBaseReqHaveOrder() {
         return entity != null && !StringUtils.isEmpty(orderField) && !StringUtils.isEmpty(orderMode);
@@ -234,10 +239,11 @@ public class PageQueryUtil<T, S extends PageBaseDTO> {
 
     /**
      * 是否存在订单字段
+     *
      * @param
      * @return {@link boolean}
      * @date 2023/1/31 13:43
-     * @author sherlock
+     * @author zhehen.lu
      */
     private boolean isExistOrderField() {
         return Arrays.stream(entity.getDeclaredFields())
@@ -246,9 +252,10 @@ public class PageQueryUtil<T, S extends PageBaseDTO> {
 
     /**
      * 设置订单字段item
+     *
      * @param
      * @date 2023/1/31 13:44
-     * @author sherlock
+     * @author zhehen.lu
      */
     private void setOrderFieldItem() {
         setOrderItem(orderField, "asc".equalsIgnoreCase(orderMode));
@@ -257,8 +264,8 @@ public class PageQueryUtil<T, S extends PageBaseDTO> {
     /**
      * 类型枚举
      *
+     * @author zhehen.lu
      * @date 2023/1/31 13:07
-     * @author sherlock
      */
     public enum TypeEnum {
         // 0以pageBaseReqVO参数传入优先（没传入排序字段时）  1 默认用户调用OrderItem优先 2 pageBaseReqVO优先没传默认以主键排倒叙
@@ -267,7 +274,6 @@ public class PageQueryUtil<T, S extends PageBaseDTO> {
         ORDER_ITEM_PRIORITY,
         PARAM_PRIORITY_DEFAULT_PRIMARY,
         PARAM_PRIORITY_DEFAULT_UPDATE_TIME,
-        PARAM_PRIORITY_DEFAULT_CREATE_TIME
-        ;
+        PARAM_PRIORITY_DEFAULT_CREATE_TIME;
     }
 }

@@ -1,16 +1,16 @@
-package com.ykyy.ec.db.util;
+package com.zhora.db.common.util;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.ykyy.ec.db.dto.FieldSearchWrapperDTO;
+import com.zhora.db.common.dto.FieldSearchWrapperDTO;
 
 import java.util.Optional;
 
 /**
  * 字段包装工具类
  *
- * @author by sherlock
+ * @author by zhehen.lu
  * @date 2023/8/23 14:39
  */
 public class FieldWrapperUtil {
@@ -21,7 +21,7 @@ public class FieldWrapperUtil {
      * @param fieldSearchWrapperDTO     字段搜索包装模型
      * @param entityField               实体字段
      * @date 2023/8/23 14:47
-     * @author sherlock
+     * @author zhehen.lu
      */
     public static <T, S, R> void setWhereWrapper(LambdaQueryChainWrapper<T> wrapper, FieldSearchWrapperDTO<S> fieldSearchWrapperDTO,
                                               SFunction<T, R> entityField) {
@@ -63,7 +63,7 @@ public class FieldWrapperUtil {
      * @param fieldSearchWrapperDTO     字段搜索包装模型
      * @param entityField               实体字段
      * @date 2023/12/25 13:06
-     * @author sherlock
+     * @author zhehen.lu
      */
     public static <T, S, R> void setWhereWrapper(LambdaQueryWrapper<T> wrapper, FieldSearchWrapperDTO<S> fieldSearchWrapperDTO,
                                                  SFunction<T, R> entityField) {

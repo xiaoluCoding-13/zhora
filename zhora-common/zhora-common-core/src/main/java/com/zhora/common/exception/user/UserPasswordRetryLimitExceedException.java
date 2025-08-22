@@ -3,7 +3,7 @@ package com.zhora.common.exception.user;
 /**
  * 用户错误最大次数异常类
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class UserPasswordRetryLimitExceedException extends UserException
 {

@@ -3,7 +3,7 @@ package com.zhora.common.exception.file;
 /**
  * 文件名大小限制异常类
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class FileSizeLimitExceededException extends FileException
 {

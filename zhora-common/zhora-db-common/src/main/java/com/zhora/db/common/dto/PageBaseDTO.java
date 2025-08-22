@@ -1,11 +1,12 @@
-package com.ykyy.ec.db.dto;
+package com.zhora.db.common.dto;
 
+import com.zhora.common.dto.page.PageBaseReqVO;
 import lombok.Data;
 
 /**
- * 分页基础数据 跟 {@link com.ykyy.ec.common.page.PageBaseReqVO}保持一致
+ * 分页基础数据 跟 {@link PageBaseReqVO}保持一致
  *
- * @author by sherlock
+ * @author by zhehen.lu
  * @date 2023/2/22 10:31
  */
 @Data
@@ -13,12 +14,12 @@ public class PageBaseDTO {
     /**
      * 页数
      */
-    private Long page=1L;
+    private Long page = 1L;
 
     /**
      * 一页的大小
      */
-    private Long pageSize=10L;
+    private Long pageSize = 10L;
 
     /**
      * id大于多少

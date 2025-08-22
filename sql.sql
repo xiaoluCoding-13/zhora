@@ -195,7 +195,7 @@ CREATE TABLE "zhora"."sys_user" (
     "login_date" timestamp(6),
     "pwd_update_date" timestamp(6),
     "remark" varchar(500) COLLATE "pg_catalog"."default",
-    "del_flag" varchar(2) COLLATE "pg_catalog"."default" DEFAULT '0'::character varying,
+    "del_flag" bool DEFAULT false,
     "create_by" varchar(64) COLLATE "pg_catalog"."default",
     "create_time" timestamp(6),
     "update_by" varchar(64) COLLATE "pg_catalog"."default",
@@ -239,7 +239,7 @@ COMMENT ON COLUMN "zhora"."sys_user"."pwd_update_date" IS '密码最后更新时
 
 COMMENT ON COLUMN "zhora"."sys_user"."remark" IS '备注';
 
-COMMENT ON COLUMN "zhora"."sys_user"."del_flag" IS '删除标记,1:已删除,0:正常';
+COMMENT ON COLUMN "zhora"."sys_user"."del_flag" IS '删除标记,true:已删除,false:正常';
 
 COMMENT ON COLUMN "zhora"."sys_user"."create_by" IS '创建人';
 
@@ -254,9 +254,8 @@ COMMENT ON TABLE "zhora"."sys_user" IS '用户信息表';
 -- ----------------------------
 -- 初始化-用户信息表数据
 -- ----------------------------
-insert into sys_user values(1,  103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '29c67a30398638269fe600f73a054934', '111111', '0', '127.0.0.1', null, null, '管理员','0', 'admin', clock_timestamp(), '', null);
-insert into sys_user values(2,  105, 'ry',    '若依', '00', 'ry@qq.com',  '15666666666', '1', '', '8e6d98b90472783cc73c17047ddccf36', '222222', '0', '127.0.0.1', null, null, '测试员','0', 'admin', clock_timestamp(), '', null);
-
+insert into sys_user values(1,  103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '29c67a30398638269fe600f73a054934', '111111', '0', '127.0.0.1', null, null, '管理员',FALSE, 'admin', clock_timestamp(), '', null);
+insert into sys_user values(2,  105, 'ry',    '若依', '00', 'ry@qq.com',  '15666666666', '1', '', '8e6d98b90472783cc73c17047ddccf36', '222222', '0', '127.0.0.1', null, null, '测试员',FALSE, 'admin', clock_timestamp(), '', null);
 
 -- ----------------------------
 -- 3、岗位信息表

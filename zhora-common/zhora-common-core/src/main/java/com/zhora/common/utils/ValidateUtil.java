@@ -1,7 +1,7 @@
-package com.ykyy.ec.common.util;
+package com.zhora.common.utils;
 
-import com.ykyy.ec.common.errcode.ErrorCode;
-import com.ykyy.ec.common.exception.BaseException;
+import com.zhora.common.errcode.ErrorCode;
+import com.zhora.common.exception.BaseException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -11,8 +11,8 @@ import java.util.Map;
 /**
  * @Classname ValidateUtil
  * @Description 校验判断工具
- * @Date 2022/7/11 9:59
- * @Created by sherlock
+ * @Date 2025/8/22 9:59
+ * @Created by zhehen.lu
  */
 public class ValidateUtil {
     /**
@@ -203,7 +203,7 @@ public class ValidateUtil {
      * @param value
      * @param code
      * @date 2023/3/8 14:06
-     * @author sherlock
+     * @author zhehen.lu
      */
     public static void mustNull(Object value, ErrorCode code) {
         if (value != null) {
@@ -251,7 +251,7 @@ public class ValidateUtil {
      * @param code
      * @param msg
      * @date 2023/3/3 16:56
-     * @author sherlock
+     * @author zhehen.lu
      */
     public static void mustGtZero(Integer value, ErrorCode code, String msg) {
         if (value == null || value.intValue() <= 0L) {
@@ -264,7 +264,7 @@ public class ValidateUtil {
      * @param value
      * @param code
      * @date 2023/3/16 10:01
-     * @author sherlock
+     * @author zhehen.lu
      */
     public static void mustGteZero(Long value, ErrorCode code) {
         if (value == null || value.longValue() < 0L) {
@@ -277,7 +277,7 @@ public class ValidateUtil {
      * @param value
      * @param code
      * @date 2023/3/16 10:01
-     * @author sherlock
+     * @author zhehen.lu
      */
     public static void mustGteZero(Integer value, ErrorCode code) {
         if (value == null || value.intValue() < 0) {
@@ -292,7 +292,7 @@ public class ValidateUtil {
      * @param max
      * @param code
      * @date 2023/3/6 13:12
-     * @author sherlock
+     * @author zhehen.lu
      */
     public static void numberRange(long number, long min, long max, ErrorCode code) {
         if (number < min || number> max) {
@@ -309,7 +309,7 @@ public class ValidateUtil {
      * @param msg
      *
      * @date 2023/8/24 16:25
-     * @author sherlock
+     * @author zhehen.lu
      */
     public static void numberRange(long number, long min, long max, ErrorCode code, String msg) {
         if (number < min || number> max) {
@@ -352,8 +352,8 @@ public class ValidateUtil {
      * @param str
      * @param maxLen
      * @param code
-     * @Date 2022/10/25 11:24
-     * @author sherlock
+     * @Date 2025/8/22 11:24
+     * @author zhehen.lu
      */
     public static void strLengthMax(String str, Integer maxLen, ErrorCode code) {
         if (!StringUtils.isEmpty(str) && str.length() > maxLen) {

@@ -1,4 +1,4 @@
-package com.zhora.admin.controller;
+package com.zhora.admin.controller.ai;
 
 import com.zhora.admin.domain.ai.ChatDto;
 import com.zhora.admin.service.impl.AiChatService;
@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * @author zhehen.lu
- * @date 2025/7/27 15:47
+ * @date 2025/8/22 15:47
  */
 @RestController
 @CrossOrigin

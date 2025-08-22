@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Repeatable 过滤器
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class RepeatableFilter implements Filter
 {

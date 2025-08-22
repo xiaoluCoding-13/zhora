@@ -23,13 +23,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
-        <!--mybatis-plus 持久层-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <groupId>com.lzh</groupId>
+            <artifactId>lzh-21-db-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 

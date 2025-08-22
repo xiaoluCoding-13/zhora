@@ -1,9 +1,8 @@
 package com.zhora.entity.ai;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.zhora.db.common.config.PgEnumTypeHandler;
+import com.zhora.entity.BaseEntity;
 import com.zhora.enums.ai.LlmCodeEnum;
 import com.zhora.enums.ai.LlmTypeEnum;
 import lombok.Data;
@@ -12,7 +11,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 
  * @author zhehen.lu
- * @date 2025/7/29 14:02
+ * @date 2025/8/22 14:02
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

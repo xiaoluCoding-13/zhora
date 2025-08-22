@@ -5,7 +5,7 @@ import com.zhora.common.exception.base.BaseException;
 /**
  * 文件信息异常类
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class FileException extends BaseException
 {

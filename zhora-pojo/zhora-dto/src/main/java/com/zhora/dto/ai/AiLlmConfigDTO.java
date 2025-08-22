@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 
  * @author zhehen.lu
- * @date 2025/7/29 13:59
+ * @date 2025/8/22 13:59
  */
 @Data
 public class AiLlmConfigDTO {

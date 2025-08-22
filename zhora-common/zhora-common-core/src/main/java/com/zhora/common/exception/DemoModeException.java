@@ -3,7 +3,7 @@ package com.zhora.common.exception;
 /**
  * 演示模式异常
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class DemoModeException extends RuntimeException
 {

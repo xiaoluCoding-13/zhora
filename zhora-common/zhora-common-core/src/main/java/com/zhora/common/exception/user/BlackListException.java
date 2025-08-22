@@ -3,7 +3,7 @@ package com.zhora.common.exception.user;
 /**
  * 黑名单IP异常类
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class BlackListException extends UserException
 {

@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * @author zhehen.lu
- * @date 2025/7/29 15:08
+ * @date 2025/8/22 15:08
  */
 @Data
 public class QwenEmbeddingModelConfig {

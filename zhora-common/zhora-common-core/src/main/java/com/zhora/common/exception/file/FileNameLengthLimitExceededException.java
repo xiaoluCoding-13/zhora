@@ -3,7 +3,7 @@ package com.zhora.common.exception.file;
 /**
  * 文件名称超长限制异常类
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class FileNameLengthLimitExceededException extends FileException
 {

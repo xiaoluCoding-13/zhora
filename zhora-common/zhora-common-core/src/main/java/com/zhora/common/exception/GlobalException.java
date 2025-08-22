@@ -3,7 +3,7 @@ package com.zhora.common.exception;
 /**
  * 全局异常
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class GlobalException extends RuntimeException
 {

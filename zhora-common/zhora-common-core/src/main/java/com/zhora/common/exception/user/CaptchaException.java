@@ -3,7 +3,7 @@ package com.zhora.common.exception.user;
 /**
  * 验证码错误异常类
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class CaptchaException extends UserException
 {

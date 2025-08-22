@@ -3,7 +3,7 @@ package com.zhora.common.exception;
 /**
  * 业务异常
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public final class ServiceException extends RuntimeException
 {

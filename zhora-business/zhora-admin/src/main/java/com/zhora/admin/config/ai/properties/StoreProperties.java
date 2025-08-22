@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author zhehen.lu
- * @date 2025/7/27 15:40
+ * @date 2025/8/22 15:40
  */
 @Component
 @ConfigurationProperties(prefix = "langchain4j.embeddingstore")

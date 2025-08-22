@@ -3,7 +3,7 @@ package com.zhora.common.exception.job;
 /**
  * 计划策略异常
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class TaskException extends Exception
 {

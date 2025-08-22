@@ -3,7 +3,7 @@ package com.zhora.common.exception;
 /**
  * 工具类异常
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class UtilException extends RuntimeException
 {

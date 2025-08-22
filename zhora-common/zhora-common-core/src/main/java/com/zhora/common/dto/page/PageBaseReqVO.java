@@ -1,7 +1,6 @@
-package com.ykyy.ec.common.page;
+package com.zhora.common.dto.page;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,29 +8,29 @@ import lombok.NoArgsConstructor;
 /**
  * 请求分页数据基础类
  *
- * @author by sherlock
- * @Date 2022/11/4 14:10
+ * @author by zhehen.lu
+ * @Date 2025/8/22 14:10
  */
-@ApiModel("请求分页数据基础类")
+@Schema(description = "请求分页数据基础类")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageBaseReqVO {
-    @ApiModelProperty("页数")
-    private Long page=1L;
+    @Schema(description = "页数")
+    private Long page = 1L;
 
-    @ApiModelProperty("一页的大小")
-    private Long pageSize=10L;
+    @Schema(description = "一页的大小")
+    private Long pageSize = 10L;
 
-    @ApiModelProperty(hidden = true, value = "id大于多少")
+    @Schema(hidden = true, description = "id大于多少")
     private Long gtId;
 
-    @ApiModelProperty(hidden = true, value = "id小于多少")
+    @Schema(hidden = true, description = "id小于多少")
     private Long ltId;
 
-    @ApiModelProperty("排序字段")
+    @Schema(description = "排序字段")
     private String orderField;
 
-    @ApiModelProperty("排序方式 正序asc 倒叙desc")
+    @Schema(description = "排序方式 正序asc 倒叙desc")
     private String orderMode;
 }

@@ -3,7 +3,7 @@ package com.zhora.common.exception.user;
 /**
  * 用户不存在异常类
  * 
- * @author yrq
+ * @author zhehen.lu
  */
 public class UserNotExistsException extends UserException
 {

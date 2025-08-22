@@ -1,4 +1,4 @@
-package com.lzh.jackson.serializer;
+package com.zhora.common.jackson.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

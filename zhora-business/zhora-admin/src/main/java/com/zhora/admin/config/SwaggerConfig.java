@@ -7,7 +7,7 @@ import io.swagger.v3.oas.models.info.Info;
 
 /**
  * @author zhehen.lu
- * @date 2025/7/27 15:06
+ * @date 2025/8/22 15:06
  */
 @Configuration
 public class SwaggerConfig {
