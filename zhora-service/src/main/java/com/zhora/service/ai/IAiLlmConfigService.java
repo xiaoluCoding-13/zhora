@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * 
  * @author zhehen.lu
- * @date 2025/7/29 14:04
+ * @date 2025/8/22 14:04
  */
 public interface IAiLlmConfigService extends IService<AiLlmConfigEntity> {
 

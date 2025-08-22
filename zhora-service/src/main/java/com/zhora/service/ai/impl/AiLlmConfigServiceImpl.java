@@ -21,7 +21,7 @@ import java.util.Optional;
 
 /**
  * @author zhehen.lu
- * @date 2025/7/29 14:06
+ * @date 2025/8/22 14:06
  */
 @Service
 public class AiLlmConfigServiceImpl extends ServiceImpl<AiLlmConfigMapper, AiLlmConfigEntity> implements IAiLlmConfigService {
@@ -57,7 +57,7 @@ public class AiLlmConfigServiceImpl extends ServiceImpl<AiLlmConfigMapper, AiLlm
      *
      * @param searchDTO
      * @return {@link LambdaQueryChainWrapper<  AiLlmConfigEntity >}
-     * @date 2025/7/28 23:03
+     * @date 2025/8/22 23:03
      * @author zhehen.lu
      */
     private LambdaQueryWrapper<AiLlmConfigEntity> getWrapper(AiLlmConfigSearchDTO searchDTO) {
