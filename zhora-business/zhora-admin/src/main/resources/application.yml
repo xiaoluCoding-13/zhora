@@ -72,4 +72,4 @@ springdoc:
     - group: 1.ai模块
       packages-to-scan: com.zhora.admin.controller.ai
     - group: 2.系统模块
-      packages-to-scan: com.zhora.admin.controller.system
+      packages-to-scan: com.zhora.admin.v1.system

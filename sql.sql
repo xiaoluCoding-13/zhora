@@ -118,7 +118,7 @@ CREATE TABLE "zhora"."sys_dept" (
     "phone" varchar(11) COLLATE "pg_catalog"."default",
     "email" varchar(50) COLLATE "pg_catalog"."default",
     "status" char(1) COLLATE "pg_catalog"."default",
-    "del_flag" varchar(2) COLLATE "pg_catalog"."default" DEFAULT '0'::character varying,
+    "del_flag" bool DEFAULT false,
     "create_by" varchar(64) COLLATE "pg_catalog"."default",
     "create_time" timestamp(6),
     "update_by" varchar(64) COLLATE "pg_catalog"."default",
@@ -148,7 +148,7 @@ COMMENT ON COLUMN "zhora"."sys_dept"."email" IS '邮箱';
 
 COMMENT ON COLUMN "zhora"."sys_dept"."status" IS '部门状态（0正常 1停用）';
 
-COMMENT ON COLUMN "zhora"."sys_dept"."del_flag" IS '删除标记,1:已删除,0:正常';
+COMMENT ON COLUMN "zhora"."sys_dept"."del_flag" IS '删除标记,true:已删除,false:正常';
 
 COMMENT ON COLUMN "zhora"."sys_dept"."create_by" IS '创建人';
 
@@ -159,21 +159,19 @@ COMMENT ON COLUMN "zhora"."sys_dept"."update_by" IS '更新人';
 COMMENT ON COLUMN "zhora"."sys_dept"."update_time" IS '更新时间';
 
 COMMENT ON TABLE "zhora"."sys_dept" IS '部门表';
-
 -- ----------------------------
 -- 初始化-部门表数据
 -- ----------------------------
-insert into sys_dept values(100,  0,   '0',          '若依科技',   0, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', clock_timestamp(), '', null);
-insert into sys_dept values(101,  100, '0,100',      '深圳总公司', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', clock_timestamp(), '', null);
-insert into sys_dept values(102,  100, '0,100',      '长沙分公司', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', clock_timestamp(), '', null);
-insert into sys_dept values(103,  101, '0,100,101',  '研发部门',   1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', clock_timestamp(), '', null);
-insert into sys_dept values(104,  101, '0,100,101',  '市场部门',   2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', clock_timestamp(), '', null);
-insert into sys_dept values(105,  101, '0,100,101',  '测试部门',   3, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', clock_timestamp(), '', null);
-insert into sys_dept values(106,  101, '0,100,101',  '财务部门',   4, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', clock_timestamp(), '', null);
-insert into sys_dept values(107,  101, '0,100,101',  '运维部门',   5, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', clock_timestamp(), '', null);
-insert into sys_dept values(108,  102, '0,100,102',  '市场部门',   1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', clock_timestamp(), '', null);
-insert into sys_dept values(109,  102, '0,100,102',  '财务部门',   2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', clock_timestamp(), '', null);
-
+INSERT INTO "zhora"."sys_dept" ("dept_id", "parent_id", "ancestors", "dept_name", "order_num", "leader", "phone", "email", "status", "del_flag", "create_by", "create_time", "update_by", "update_time") VALUES (100, 0, '0', '若依科技', 0, '若依', '15888888888', 'ry@qq.com', '0', FALSE, 'admin', '2025-08-19 08:23:23.83621', '', NULL);
+INSERT INTO "zhora"."sys_dept" ("dept_id", "parent_id", "ancestors", "dept_name", "order_num", "leader", "phone", "email", "status", "del_flag", "create_by", "create_time", "update_by", "update_time") VALUES (101, 100, '0,100', '深圳总公司', 1, '若依', '15888888888', 'ry@qq.com', '0', FALSE, 'admin', '2025-08-19 08:23:23.840647', '', NULL);
+INSERT INTO "zhora"."sys_dept" ("dept_id", "parent_id", "ancestors", "dept_name", "order_num", "leader", "phone", "email", "status", "del_flag", "create_by", "create_time", "update_by", "update_time") VALUES (102, 100, '0,100', '长沙分公司', 2, '若依', '15888888888', 'ry@qq.com', '0', FALSE, 'admin', '2025-08-19 08:23:23.841963', '', NULL);
+INSERT INTO "zhora"."sys_dept" ("dept_id", "parent_id", "ancestors", "dept_name", "order_num", "leader", "phone", "email", "status", "del_flag", "create_by", "create_time", "update_by", "update_time") VALUES (103, 101, '0,100,101', '研发部门', 1, '若依', '15888888888', 'ry@qq.com', '0', FALSE, 'admin', '2025-08-19 08:23:23.843171', '', NULL);
+INSERT INTO "zhora"."sys_dept" ("dept_id", "parent_id", "ancestors", "dept_name", "order_num", "leader", "phone", "email", "status", "del_flag", "create_by", "create_time", "update_by", "update_time") VALUES (104, 101, '0,100,101', '市场部门', 2, '若依', '15888888888', 'ry@qq.com', '0', FALSE, 'admin', '2025-08-19 08:23:23.844293', '', NULL);
+INSERT INTO "zhora"."sys_dept" ("dept_id", "parent_id", "ancestors", "dept_name", "order_num", "leader", "phone", "email", "status", "del_flag", "create_by", "create_time", "update_by", "update_time") VALUES (105, 101, '0,100,101', '测试部门', 3, '若依', '15888888888', 'ry@qq.com', '0', FALSE, 'admin', '2025-08-19 08:23:23.845269', '', NULL);
+INSERT INTO "zhora"."sys_dept" ("dept_id", "parent_id", "ancestors", "dept_name", "order_num", "leader", "phone", "email", "status", "del_flag", "create_by", "create_time", "update_by", "update_time") VALUES (106, 101, '0,100,101', '财务部门', 4, '若依', '15888888888', 'ry@qq.com', '0', FALSE, 'admin', '2025-08-19 08:23:23.846263', '', NULL);
+INSERT INTO "zhora"."sys_dept" ("dept_id", "parent_id", "ancestors", "dept_name", "order_num", "leader", "phone", "email", "status", "del_flag", "create_by", "create_time", "update_by", "update_time") VALUES (107, 101, '0,100,101', '运维部门', 5, '若依', '15888888888', 'ry@qq.com', '0', FALSE, 'admin', '2025-08-19 08:23:23.847249', '', NULL);
+INSERT INTO "zhora"."sys_dept" ("dept_id", "parent_id", "ancestors", "dept_name", "order_num", "leader", "phone", "email", "status", "del_flag", "create_by", "create_time", "update_by", "update_time") VALUES (108, 102, '0,100,102', '市场部门', 1, '若依', '15888888888', 'ry@qq.com', '0', FALSE, 'admin', '2025-08-19 08:23:23.848175', '', NULL);
+INSERT INTO "zhora"."sys_dept" ("dept_id", "parent_id", "ancestors", "dept_name", "order_num", "leader", "phone", "email", "status", "del_flag", "create_by", "create_time", "update_by", "update_time") VALUES (109, 102, '0,100,102', '财务部门', 2, '若依', '15888888888', 'ry@qq.com', '0', FALSE, 'admin', '2025-08-19 08:23:23.849129', '', NULL);
 
 -- ----------------------------
 -- 2、用户信息表
@@ -320,6 +318,11 @@ CREATE TABLE "zhora"."sys_role" (
     "data_scope" char(1) COLLATE "pg_catalog"."default" DEFAULT 1,
     "status" char(1) COLLATE "pg_catalog"."default" DEFAULT 0,
     "remark" varchar(500) COLLATE "pg_catalog"."default",
+    "del_flag" bool DEFAULT false,
+    "create_by" varchar(64) COLLATE "pg_catalog"."default",
+    "create_time" timestamp(6),
+    "update_by" varchar(64) COLLATE "pg_catalog"."default",
+    "update_time" timestamp(6),
     CONSTRAINT "sys_role_pkey" PRIMARY KEY ("role_id")
 )
 ;
@@ -341,14 +344,23 @@ COMMENT ON COLUMN "zhora"."sys_role"."status" IS '角色状态（0正常 1停用
 
 COMMENT ON COLUMN "zhora"."sys_role"."remark" IS '备注';
 
+COMMENT ON COLUMN "zhora"."sys_role"."del_flag" IS '删除标记,true:已删除,false:正常';
+
+COMMENT ON COLUMN "zhora"."sys_role"."create_by" IS '创建人';
+
+COMMENT ON COLUMN "zhora"."sys_role"."create_time" IS '创建时间';
+
+COMMENT ON COLUMN "zhora"."sys_role"."update_by" IS '更新人';
+
+COMMENT ON COLUMN "zhora"."sys_role"."update_time" IS '更新时间';
+
 COMMENT ON TABLE "zhora"."sys_role" IS '角色信息表';
 
 -- ----------------------------
 -- 初始化-角色信息表数据
 -- ----------------------------
-insert into sys_role values('1', '超级管理员', 'admin',  1, 1, '0', '超级管理员','0',  'admin', clock_timestamp(), '', null);
-insert into sys_role values('2', '普通角色',   'common', 2, 2, '0', '普通角色','0', 'admin', clock_timestamp(), '', null);
-
+INSERT INTO "zhora"."sys_role" ("role_id", "role_name", "role_key", "role_sort", "data_scope", "status", "remark", "del_flag", "create_by", "create_time", "update_by", "update_time") VALUES (1, '超级管理员', 'admin', 1, '1', '0', '超级管理员', false, 'admin', '2025-08-19 08:51:32.47536', '', NULL);
+INSERT INTO "zhora"."sys_role" ("role_id", "role_name", "role_key", "role_sort", "data_scope", "status", "remark", "del_flag", "create_by", "create_time", "update_by", "update_time") VALUES (2, '普通角色', 'common', 2, '2', '0', '普通角色', false, 'admin', '2025-08-19 08:51:32.477144', '', NULL);
 
 -- ----------------------------
 -- 5、菜单权限表

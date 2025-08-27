@@ -6,17 +6,24 @@ import com.zhora.dto.system.SysUserDTO;
 import com.zhora.dto.system.search.SysUserSearchDTO;
 import com.zhora.entity.system.SysUserEntity;
 
+import java.util.List;
+
 /**
  * 用户 业务层
  * 
  * @author ruoyi
  */
 public interface ISysUserService extends IService<SysUserEntity> {
-    /**
-     * 根据条件分页查询用户列表
-     * 
-     * @param user 用户信息
-     * @return 用户信息集合信息
-     */
-    public PageDataGridRespDTO<SysUserDTO> selectUserList(SysUserSearchDTO searchDTO);
+
+    PageDataGridRespDTO<SysUserDTO> listPage(SysUserSearchDTO searchDTO);
+
+    void create(SysUserDTO dto);
+
+    SysUserDTO getDetailById(Long userId);
+
+    SysUserDTO getDetail(SysUserSearchDTO searchDTO);
+
+    void updateById(SysUserDTO dto);
+
+    List<SysUserDTO> list(SysUserSearchDTO searchDTO);
 }

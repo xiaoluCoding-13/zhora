@@ -1,23 +1,23 @@
-package com.zhora.dto.system.search;
+package com.zhora.admin.v1.system.user.dto;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.zhora.db.common.dto.PageBaseDTO;
+import com.zhora.admin.v1.system.dept.dto.SysDeptDetailDTO;
+import com.zhora.admin.v1.system.role.dto.SysRoleDetailDTO;
+import com.zhora.dto.system.SysRoleDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户信息
  *
  * @author zhehen.lu
- * @date 2025/8/21 19:37
+ * @date 2025/8/26 13:44
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-@Schema(name = "SysUserDTO",description = "用户信息搜索模型")
-public class SysUserSearchDTO extends PageBaseDTO {
+@Schema(name = "SysUserListDTO",description = "用户信息列表响应模型")
+public class SysUserListDTO {
     /** 用户ID */
     private Long userId;
 
@@ -66,9 +66,15 @@ public class SysUserSearchDTO extends PageBaseDTO {
     /** 备注 */
     private String remark;
 
-    /**
-     * 删除标记,true:已删除,false:正常
-     */
-    @TableLogic
-    private Boolean delFlag;
+    /** 部门对象 */
+    private SysDeptDetailDTO dept;
+
+    /** 角色对象 */
+    private List<SysRoleDTO> roles;
+
+    /** 角色组 */
+    private Long[] roleIds;
+
+    /** 岗位组 */
+    private Long[] postIds;
 }

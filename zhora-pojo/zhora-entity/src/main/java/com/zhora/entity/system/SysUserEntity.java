@@ -1,11 +1,12 @@
 package com.zhora.entity.system;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.zhora.entity.BaseEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,9 +15,8 @@ import java.util.Date;
  * @author zhehen.lu
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("sys_user")
-public class SysUserEntity extends BaseEntity {
+public class SysUserEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** 用户ID */
@@ -72,4 +72,28 @@ public class SysUserEntity extends BaseEntity {
      */
     @TableLogic
     private Boolean delFlag;
+
+    /**
+     * 创建人
+     */
+    @TableField(value = "create_by")
+    private String createBy;
+
+    /**
+     * 创建时间
+     */
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
+
+    /**
+     * 更新人
+     */
+    @TableField(value = "update_by")
+    private String updateBy;
+
+    /**
+     * 更新时间
+     */
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
 }

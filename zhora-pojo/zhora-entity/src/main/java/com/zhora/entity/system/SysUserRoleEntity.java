@@ -1,65 +1,39 @@
-package com.zhora.entity.ai;
+package com.zhora.entity.system;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.zhora.enums.ai.LlmCodeEnum;
-import com.zhora.enums.ai.LlmTypeEnum;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 
+ * 用户和角色关联表(sys_user_role)实体类
+ *
  * @author zhehen.lu
- * @date 2025/8/22 14:02
+ * @since 2025-08-27 15:05:50
  */
 @Data
-@TableName("ai_llm_config")
-public class AiLlmConfigEntity implements Serializable {
+@TableName(value = "sys_user_role", autoResultMap = true)
+public class SysUserRoleEntity implements Serializable {
+    private static final long serialVersionUID = 395539149596842921L;
     /**
-     * id
+     * 用户ID
      */
-    private Long id;
+    private Long userId;
+
     /**
-     * 模型厂家
+     * 角色ID
      */
-    private String name;
-    /**
-     * 模型code
-     */
-    private LlmCodeEnum code;
-    /**
-     * 模型名称
-     */
-    private String modelName;
-    /**
-     * 模型类型
-     */
-    private LlmTypeEnum type;
-    /**
-     * 模型秘钥
-     */
-    private String apiKey;
-    /**
-     * 模型base地址
-     */
-    private String url;
-    /**
-     * 是否禁用
-     */
-    private Boolean enable;
-    /**
-     * 优先级
-     */
-    private Short priority;
+    private Long roleId;
 
     /**
      * 删除标记,true:已删除,false:正常
      */
     @TableLogic
+    @TableField(value = "del_flag")
     private Boolean delFlag;
 
     /**
@@ -85,4 +59,6 @@ public class AiLlmConfigEntity implements Serializable {
      */
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
+
 }
+

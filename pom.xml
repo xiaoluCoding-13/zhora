@@ -49,6 +49,8 @@
 		<fastjson.version>2.0.57</fastjson.version>
 		<jakarta.servlet.version>6.0.0</jakarta.servlet.version>
 		<jackson-databind.version>2.19.2</jackson-databind.version>
+
+		<kaptcha.version>2.3.3</kaptcha.version>
 	</properties>
 
 	<!-- 依赖声明 -->
@@ -236,6 +238,12 @@
 				<version>${jackson-databind.version}</version>
 			</dependency>
 
+			<!-- 验证码 -->
+			<dependency>
+				<groupId>pro.fessional</groupId>
+				<artifactId>kaptcha</artifactId>
+				<version>${kaptcha.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
