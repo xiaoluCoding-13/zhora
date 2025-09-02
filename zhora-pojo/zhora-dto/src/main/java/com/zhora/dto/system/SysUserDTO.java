@@ -107,4 +107,14 @@ public class SysUserDTO {
      */
     @Schema(description = "更新时间")
     private Date updateTime;
+
+    public boolean isAdmin()
+    {
+        return isAdmin(this.userId);
+    }
+
+    public static boolean isAdmin(Long userId)
+    {
+        return userId != null && 1L == userId;
+    }
 }

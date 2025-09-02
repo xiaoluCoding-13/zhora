@@ -2,6 +2,7 @@ package com.zhora.service.system.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhora.common.dto.page.PageDataGridRespDTO;
@@ -15,9 +16,10 @@ import com.zhora.entity.system.SysRoleEntity;
 import com.zhora.mapper.system.SysRoleMapper;
 import com.zhora.service.system.ISysRoleService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * 角色信息表(sys_role)表服务实现类
@@ -135,6 +137,18 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
         List<SysRoleEntity> entityList = wrapper.list();
 
         return BeanUtil.copyToList(entityList, SysRoleDTO.class);
+    }
+
+    @Override
+    public Set<String> selectRoleKeys(Long userId) {
+        List<SysRoleEntity> perms = this.baseMapper.selectRolesByUserId(userId);
+        Set<String> permsSet = new HashSet<>();
+        for (SysRoleEntity perm : perms) {
+            if (Objects.nonNull(perm)) {
+                permsSet.addAll(Arrays.asList(perm.getRoleKey().trim().split(StringPool.COMMA)));
+            }
+        }
+        return permsSet;
     }
 
     /**

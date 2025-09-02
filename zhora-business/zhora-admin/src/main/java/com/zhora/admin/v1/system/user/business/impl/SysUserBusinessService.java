@@ -1,12 +1,11 @@
 package com.zhora.admin.v1.system.user.business.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.google.common.collect.Lists;
 import com.zhora.admin.v1.system.dept.dto.SysDeptDetailDTO;
-import com.zhora.admin.v1.system.role.dto.SysRoleDetailDTO;
 import com.zhora.admin.v1.system.user.business.ISysUserBusinessService;
+import com.zhora.admin.v1.system.user.dto.SysUserDetailDTO;
 import com.zhora.admin.v1.system.user.dto.SysUserListDTO;
-import com.zhora.admin.v1.system.user.vo.SysUserListVO;
+import com.zhora.admin.v1.system.user.vo.*;
 import com.zhora.common.dto.page.PageDataGridRespDTO;
 import com.zhora.common.utils.ListUtils;
 import com.zhora.common.utils.PageDataGridCommonRespUtil;
@@ -27,11 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 用户业务层
@@ -126,6 +122,136 @@ public class SysUserBusinessService implements ISysUserBusinessService {
                 .collect(Collectors.toList());
 
         return PageDataGridCommonRespUtil.convert(page, collect);
+    }
+
+    @Override
+    public List<SysUserListDTO> selectUserList(SysUserListVO listVO) {
+        return List.of();
+    }
+
+    @Override
+    public List<SysUserListDTO> selectAllocatedList(SysUserListVO listVO) {
+        return List.of();
+    }
+
+    @Override
+    public List<SysUserListDTO> selectUnallocatedList(SysUserListVO listVO) {
+        return List.of();
+    }
+
+    @Override
+    public SysUserDetailDTO selectUserByLoginName(String userName) {
+        return null;
+    }
+
+    @Override
+    public SysUserDetailDTO selectUserByPhoneNumber(String phoneNumber) {
+        return null;
+    }
+
+    @Override
+    public SysUserDetailDTO selectUserByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public SysUserDetailDTO selectUserById(Long userId) {
+        return null;
+    }
+
+    @Override
+    public List<SysUserListDTO> selectUserRoleByUserId(Long userId) {
+        return List.of();
+    }
+
+    @Override
+    public int deleteUserById(Long userId) {
+        return 0;
+    }
+
+    @Override
+    public int deleteUserByIds(String ids) {
+        return 0;
+    }
+
+    @Override
+    public int insertUser(SysUserCreateVO createVO) {
+        return 0;
+    }
+
+    @Override
+    public boolean registerUser(SysUserRegisterVO registerVO) {
+        return false;
+    }
+
+    @Override
+    public int updateUser(SysUserUpdateVO updateVO) {
+        return 0;
+    }
+
+    @Override
+    public int updateUserInfo(SysUserUpdateVO updateVO) {
+        return 0;
+    }
+
+    @Override
+    public boolean updateUserAvatar(Long userId, String avatar) {
+        return false;
+    }
+
+    @Override
+    public void insertUserAuth(Long userId, Long[] roleIds) {
+
+    }
+
+    @Override
+    public int resetUserPwd(SysUserUpdateVO updateVO) {
+        return 0;
+    }
+
+    @Override
+    public boolean checkLoginNameUnique(SysUserCheckVO checkVO) {
+        return false;
+    }
+
+    @Override
+    public boolean checkPhoneUnique(SysUserCheckVO checkVO) {
+        return false;
+    }
+
+    @Override
+    public boolean checkEmailUnique(SysUserCheckVO checkVO) {
+        return false;
+    }
+
+    @Override
+    public void checkUserAllowed(SysUserCheckVO checkVO) {
+
+    }
+
+    @Override
+    public void checkUserDataScope(Long userId) {
+
+    }
+
+    @Override
+    public String selectUserRoleGroup(Long userId) {
+        return "";
+    }
+
+    @Override
+    public String selectUserPostGroup(Long userId) {
+        return "";
+    }
+
+    @Override
+    public String importUser(List<SysUserListVO> userList, Boolean isUpdateSupport, String operName) {
+        return "";
+    }
+
+    @Override
+    public int changeStatus(SysUserUpdateVO updateVO) {
+        return 0;
     }
 
 }

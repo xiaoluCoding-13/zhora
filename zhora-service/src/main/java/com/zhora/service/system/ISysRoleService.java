@@ -7,6 +7,7 @@ import com.zhora.dto.system.search.SysRoleSearchDTO;
 import com.zhora.entity.system.SysRoleEntity;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 角色信息表(sys_role)表服务接口
@@ -27,4 +28,6 @@ public interface ISysRoleService extends IService<SysRoleEntity> {
     void updateById(SysRoleDTO dto);
 
     List<SysRoleDTO> list(SysRoleSearchDTO searchDTO);
+
+    Set<String> selectRoleKeys(Long userId);
 }

@@ -42,7 +42,7 @@ mybatis-plus:
       logic-delete-field: del_flag  # 逻辑删除字段（默认 deleted）
       logic-delete-value: true  # 逻辑删除值
       logic-not-delete-value: false  # 未删除值
-  mapper-locations: classpath:mapper/*.xml  # XML 映射文件路径（可选）
+  mapper-locations: classpath:mapper/**/*.xml  # XML 映射文件路径（可选）
 
 
 # Knife4j 配置
@@ -70,6 +70,21 @@ springdoc:
   #这里定义了分组，可定义多个，也可以不定义
   group-configs:
     - group: 1.ai模块
-      packages-to-scan: com.zhora.admin.controller.ai
+      packages-to-scan: com.zhora.admin.v1.ai
     - group: 2.系统模块
       packages-to-scan: com.zhora.admin.v1.system
+
+# 项目相关配置
+zhora:
+  # 名称
+  name: RuoYi
+  # 版本
+  version: 4.8.1
+  # 版权年份
+  copyrightYear: 2025
+  # 实例演示开关
+  demoEnabled: true
+  # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
+  profile: D:/ruoyi/uploadPath
+  # 获取ip地址开关
+  addressEnabled: false

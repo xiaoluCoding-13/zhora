@@ -51,6 +51,11 @@
 		<jackson-databind.version>2.19.2</jackson-databind.version>
 
 		<kaptcha.version>2.3.3</kaptcha.version>
+		<shiro.version>1.12.0</shiro.version>
+		<org.ehcache.version>3.10.8</org.ehcache.version>
+
+		<joda.time.version>2.14.0</joda.time.version>
+		<bitwalker.version>1.21</bitwalker.version>
 	</properties>
 
 	<!-- 依赖声明 -->
@@ -244,6 +249,72 @@
 				<artifactId>kaptcha</artifactId>
 				<version>${kaptcha.version}</version>
 			</dependency>
+
+			<!-- Shiro核心框架 -->
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-core</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+
+			<!-- Shiro使用Spring框架 -->
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-spring</artifactId>
+				<version>${shiro.version}</version>
+				<classifier>jakarta</classifier>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.shiro</groupId>
+						<artifactId>shiro-core</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache.shiro</groupId>
+						<artifactId>shiro-web</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- Shiro Jakarta 支持 -->
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-web</artifactId>
+				<version>${shiro.version}</version>
+				<classifier>jakarta</classifier>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.shiro</groupId>
+						<artifactId>shiro-core</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- Shiro使用EhCache缓存框架 -->
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-ehcache</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.ehcache</groupId>
+				<artifactId>ehcache</artifactId>
+				<version>${org.ehcache.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>${joda.time.version}</version>
+			</dependency>
+
+			<!-- 解析客户端操作系统、浏览器等 -->
+			<dependency>
+				<groupId>eu.bitwalker</groupId>
+				<artifactId>UserAgentUtils</artifactId>
+				<version>${bitwalker.version}</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 

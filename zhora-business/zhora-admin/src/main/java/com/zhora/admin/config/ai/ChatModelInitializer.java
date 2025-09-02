@@ -3,7 +3,7 @@ package com.zhora.admin.config.ai;
 import com.zhora.admin.component.PromptConfiguration;
 import com.zhora.admin.config.ai.model.DeepSeekChatModelConfig;
 import com.zhora.admin.config.ai.model.QwenChatModelConfig;
-import com.zhora.admin.service.AiChatAssistant;
+import com.zhora.admin.v1.ai.business.AiChatAssistant;
 import com.zhora.dto.ai.AiLlmConfigDTO;
 import com.zhora.dto.ai.AiLlmConfigSearchDTO;
 import com.zhora.enums.ai.LlmCodeEnum;

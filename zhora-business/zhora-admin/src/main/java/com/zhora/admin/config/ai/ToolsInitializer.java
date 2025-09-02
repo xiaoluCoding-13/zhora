@@ -1,7 +1,7 @@
 package com.zhora.admin.config.ai;
 
 import com.zhora.admin.component.UserRolePermissionOperatorTool;
-import com.zhora.admin.service.SystemToolAssistant;
+import com.zhora.admin.v1.ai.business.SystemToolAssistant;
 import dev.langchain4j.community.model.dashscope.QwenStreamingChatModel;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;

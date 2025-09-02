@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  * 角色信息表(sys_role)实体类
@@ -12,7 +13,7 @@ import java.util.Date;
  * @since 2025-08-26 17:01:36
  */
 @Data
-@Schema(name = "SysRoleDetailDTO",description = "角色信息详情响应模型")
+@Schema(name = "SysRoleDetailDTO", description = "角色信息详情响应模型")
 public class SysRoleDetailDTO {
     /**
      * 角色ID
@@ -50,9 +51,33 @@ public class SysRoleDetailDTO {
     @Schema(description = "角色状态（0正常 1停用）")
     private String status;
 
-    /** 备注 */
+    /**
+     * 备注
+     */
     @Schema(description = "备注")
     private String remark;
 
+    /**
+     * 菜单组
+     */
+    private Long[] menuIds;
+
+    /**
+     * 部门组（数据权限）
+     */
+    private Long[] deptIds;
+
+    /**
+     * 角色菜单权限
+     */
+    private Set<String> permissions;
+
+    public boolean isAdmin() {
+        return isAdmin(this.roleId);
+    }
+
+    public static boolean isAdmin(Long roleId) {
+        return roleId != null && 1L == roleId;
+    }
 }
 
