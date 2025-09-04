@@ -1,130 +1,89 @@
 package com.zhora.dto.system;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.zhora.common.domain.TreeNode;
+import com.zhora.common.validator.group.AddGroup;
+import com.zhora.common.validator.group.DefaultGroup;
+import com.zhora.common.validator.group.UpdateGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.Range;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
- * 菜单权限表(sys_menu)实体类
+ * 菜单管理
  *
  * @author zhehen.lu
- * @since 2025-08-28 16:21:15
+ * @since 1.0.0
  */
 @Data
-@Schema(name = "SysMenuDTO", description = "菜单权限表信息模型")
-public class SysMenuDTO {
-    /**
-     * 菜单ID
-     */
-    @Schema(description = "菜单ID")
-    private Long menuId;
+@EqualsAndHashCode(callSuper = true)
+@Schema(title = "菜单管理")
+public class SysMenuDTO extends TreeNode<SysMenuDTO> implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * 菜单名称
-     */
-    @Schema(description = "菜单名称")
-    private String menuName;
+	@Schema(title = "id")
+	@Null(message="{id.null}", groups = AddGroup.class)
+	@NotNull(message="{id.require}", groups = UpdateGroup.class)
+	private Long id;
 
-    /**
-     * 父菜单ID
-     */
-    @Schema(description = "父菜单ID")
-    private Long parentId;
+	@Schema(title = "上级ID")
+	@NotNull(message="{sysmenu.pid.require}", groups = DefaultGroup.class)
+	private Long pid;
 
-    /**
-     * 显示顺序
-     */
-    @Schema(description = "显示顺序")
-    private Integer orderNum;
+	@Schema(title = "菜单名称")
+	@NotBlank(message="sysmenu.name.require", groups = DefaultGroup.class)
+	private String name;
 
-    /**
-     * 请求地址
-     */
-    @Schema(description = "请求地址")
-    private String url;
+	@Schema(title = "菜单URL")
+	private String url;
 
-    /**
-     * 打开方式（menuItem页签 menuBlank新窗口）
-     */
-    @Schema(description = "打开方式（menuItem页签 menuBlank新窗口）")
-    private String target;
+	@Schema(title = "类型  0：菜单   1：按钮")
+	@Range(min=0, max=1, message = "{sysmenu.type.range}", groups = DefaultGroup.class)
+	private Integer menuType;
 
-    /**
-     * 菜单类型（M目录 C菜单 F按钮）
-     */
-    @Schema(description = "菜单类型（M目录 C菜单 F按钮）")
-    private String menuType;
+	@Schema(title = "菜单图标")
+	private String icon;
 
-    /**
-     * 菜单状态（0显示 1隐藏）
-     */
-    @Schema(description = "菜单状态（0显示 1隐藏）")
-    private String visible;
+	@Schema(title = "授权(多个用逗号分隔，如：sys:user:list,sys:user:save)")
+	private String permissions;
 
-    /**
-     * 是否刷新（0刷新 1不刷新）
-     */
-    @Schema(description = "是否刷新（0刷新 1不刷新）")
-    private String isRefresh;
+	@Schema(title = "排序")
+	@Min(value = 0, message = "{sort.number}", groups = DefaultGroup.class)
+	private Integer sort;
 
-    /**
-     * 权限标识
-     */
-    @Schema(description = "权限标识")
-    private String perms;
+	@Schema(title = "创建时间")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	private Date createDate;
 
-    /**
-     * 菜单图标
-     */
-    @Schema(description = "菜单图标")
-    private String icon;
+	@Schema(title = "上级菜单名称")
+	private String parentName;
 
-    /**
-     * 备注
-     */
-    @Schema(description = "备注")
-    private String remark;
+	@Override
+	public Long getId() {
+		return id;
+	}
 
-    /**
-     * 删除标记,true:已删除,false:正常
-     */
-    @Schema(description = "删除标记,true:已删除,false:正常")
-    private Boolean delFlag;
+	@Override
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * 创建人
-     */
-    @Schema(description = "创建人")
-    private String createBy;
+	@Override
+	public Long getPid() {
+		return pid;
+	}
 
-    /**
-     * 创建时间
-     */
-    @Schema(description = "创建时间")
-    private Date createTime;
+	@Override
+	public void setPid(Long pid) {
+		this.pid = pid;
+	}
 
-    /**
-     * 更新人
-     */
-    @Schema(description = "更新人")
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    @Schema(description = "更新时间")
-    private Date updateTime;
-
-    /** 子菜单 */
-    private List<SysMenuDTO> children = new ArrayList<SysMenuDTO>();
-
-    /** 请求参数 */
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Map<String, Object> params;
 }
-

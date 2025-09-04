@@ -32,7 +32,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
      * 获取应用上下文
      * @return {@link ApplicationContext}
      * @date  2025/8/22 15:27
-     * @author zsx
+     * @author zhehen.lu
      */
     public static ApplicationContext getApplicationContext() {
         return applicationContext;
@@ -43,7 +43,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
      * @param name bean名称
      * @return {@link Object}
      * @date  2025/8/22 15:28
-     * @author zsx
+     * @author zhehen.lu
      */
     public static Object getBean(String name) {
         return getApplicationContext().getBean(name);
@@ -54,7 +54,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
      * @param clazz bean类型
      * @return {@link T}
      * @date  2025/8/22 15:28
-     * @author zsx
+     * @author zhehen.lu
      */
     public static <T> T getBean(Class<T> clazz) {
         return getApplicationContext().getBean(clazz);
@@ -66,7 +66,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
      * @param clazz bean类型
      * @return {@link T}
      * @date  2025/8/22 15:25
-     * @author zsx
+     * @author zhehen.lu
      */
     public static <T> T getBean(String name, Class<T> clazz) {
         return getApplicationContext().getBean(name, clazz);
@@ -78,7 +78,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
      * @param clazz bean类型
      * @return {@link List <T>}
      * @date  2025/8/22 15:24
-     * @author zsx
+     * @author zhehen.lu
      */
     public static <T> List<T> getBeans(Class<T> clazz) {
         Map<String, T> beansOfMap = getApplicationContext().getBeansOfType(clazz);
@@ -92,7 +92,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
      * 获取当前应用名
      * @return {@link String}
      * @date  2025/8/22 15:24
-     * @author zsx
+     * @author zhehen.lu
      */
     public static String getAppName(){
         return applicationContext.getApplicationName();

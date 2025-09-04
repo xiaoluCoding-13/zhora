@@ -1,30 +1,32 @@
 package com.zhora.service.system;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhora.common.dto.page.PageDataGridRespDTO;
 import com.zhora.dto.system.SysDeptDTO;
-import com.zhora.dto.system.search.SysDeptSearchDTO;
 import com.zhora.entity.system.SysDeptEntity;
+import com.zhora.service.service.BaseService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
- * 部门表(sys_dept)表服务接口
- *
+ * 部门管理
+ * 
  * @author zhehen.lu
- * @since 2025-08-26 17:46:32
  */
-public interface ISysDeptService extends IService<SysDeptEntity> {
+public interface ISysDeptService extends BaseService<SysDeptEntity> {
 
-    PageDataGridRespDTO<SysDeptDTO> listPage(SysDeptSearchDTO searchDTO);
+	List<SysDeptDTO> list(Map<String, Object> params);
 
-    void create(SysDeptDTO dto);
+	SysDeptDTO get(Long id);
 
-    SysDeptDTO getDetailById(Long id);
+	void save(SysDeptDTO dto);
 
-    SysDeptDTO getDetail(SysDeptSearchDTO searchDTO);
+	void update(SysDeptDTO dto);
 
-    void updateById(SysDeptDTO dto);
+	void delete(Long id);
 
-    List<SysDeptDTO> list(SysDeptSearchDTO searchDTO);
+	/**
+	 * 根据部门ID，获取本部门及子部门ID列表
+	 * @param id   部门ID
+	 */
+	List<Long> getSubDeptIdList(Long id);
 }

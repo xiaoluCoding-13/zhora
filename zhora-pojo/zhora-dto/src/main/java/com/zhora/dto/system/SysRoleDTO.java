@@ -1,88 +1,50 @@
 package com.zhora.dto.system;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.zhora.common.validator.group.AddGroup;
+import com.zhora.common.validator.group.DefaultGroup;
+import com.zhora.common.validator.group.UpdateGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
- * 角色信息表(sys_role)实体类
+ * 角色管理
  *
  * @author zhehen.lu
- * @since 2025-08-26 17:01:36
+ * @since 1.0.0
  */
 @Data
-@Schema(name = "SysRoleDTO",description = "角色信息模型")
-public class SysRoleDTO {
-    /**
-     * 角色ID
-     */
-    @Schema(description = "角色ID")
-    private Long roleId;
+@Schema(title = "角色管理")
+public class SysRoleDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * 角色名称
-     */
-    @Schema(description = "角色名称")
-    private String roleName;
+	@Schema(title = "id")
+	@Null(message="{id.null}", groups = AddGroup.class)
+	@NotNull(message="{id.require}", groups = UpdateGroup.class)
+	private Long id;
 
-    /**
-     * 角色权限字符串
-     */
-    @Schema(description = "角色权限字符串")
-    private String roleKey;
+	@Schema(title = "角色名称")
+	@NotBlank(message="{sysrole.name.require}", groups = DefaultGroup.class)
+	private String name;
 
-    /**
-     * 显示顺序
-     */
-    @Schema(description = "显示顺序")
-    private Integer roleSort;
+	@Schema(title = "备注")
+	private String remark;
 
-    /**
-     * 数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）
-     */
-    @Schema(description = "数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）")
-    private String dataScope;
+	@Schema(title = "创建时间")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	private Date createDate;
 
-    /**
-     * 角色状态（0正常 1停用）
-     */
-    @Schema(description = "角色状态（0正常 1停用）")
-    private String status;
+	@Schema(title = "菜单ID列表")
+	private List<Long> menuIdList;
 
-    /** 备注 */
-    @Schema(description = "备注")
-    private String remark;
-
-    /**
-     * 删除标记,true:已删除,false:正常
-     */
-    @Schema(description = "删除标记,true:已删除,false:正常")
-    private Boolean delFlag;
-
-    /**
-     * 创建人
-     */
-    @Schema(description = "创建人")
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    @Schema(description = "创建时间")
-    private Date createTime;
-
-    /**
-     * 更新人
-     */
-    @Schema(description = "更新人")
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    @Schema(description = "更新时间")
-    private Date updateTime;
+	@Schema(title = "部门ID列表")
+	private List<Long> deptIdList;
 
 }
-

@@ -3,7 +3,7 @@ package com.zhora.admin.v1.ai.controller;
 import com.zhora.admin.v1.ai.dto.ChatDTO;
 import com.zhora.admin.v1.ai.business.impl.AiChatService;
 import com.zhora.admin.v1.ai.business.impl.RagService;
-import com.zhora.common.dto.ResponseDTO;
+import com.zhora.common.domain.ResponseDTO;
 import com.zhora.common.exception.ServiceException;
 import com.zhora.dto.ai.AiLlmConfigDTO;
 import com.zhora.dto.ai.AiLlmConfigSearchDTO;

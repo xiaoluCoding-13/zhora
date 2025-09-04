@@ -18,7 +18,9 @@ import java.nio.file.Paths;
 @Component
 public class PromptConfiguration {
 
-    @jakarta.annotation.Resource private ResourceLoader resourceLoader;
+    @jakarta.annotation.Resource
+    private ResourceLoader resourceLoader;
+
     private String system;
 
     @PostConstruct

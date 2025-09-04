@@ -1,152 +1,150 @@
 package com.zhora.service.system.impl;
 
-import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhora.common.dto.page.PageDataGridRespDTO;
-import com.zhora.common.errcode.CommonCode;
-import com.zhora.common.utils.NumberUtil;
-import com.zhora.common.utils.ValidateUtil;
-import com.zhora.db.common.util.PageDataGridRespUtil;
-import com.zhora.db.common.util.PageQueryUtil;
+import com.zhora.common.domain.page.PageData;
+import com.zhora.common.password.PasswordUtils;
+import com.zhora.common.utils.ConvertUtils;
+import com.zhora.constant.Constant;
+import com.zhora.dto.system.SecurityUser;
 import com.zhora.dto.system.SysUserDTO;
-import com.zhora.dto.system.search.SysUserSearchDTO;
+import com.zhora.dto.system.UserDetail;
 import com.zhora.entity.system.SysUserEntity;
+import com.zhora.enums.system.SuperAdminEnum;
 import com.zhora.mapper.system.SysUserMapper;
+import com.zhora.service.service.impl.BaseServiceImpl;
+import com.zhora.service.system.ISysDeptService;
+import com.zhora.service.system.ISysRoleUserService;
 import com.zhora.service.system.ISysUserService;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+
 
 /**
- * 用户 业务层处理
- * 
- * @author ruoyi
+ * 系统用户
+ *
+ * @author zhehen.lu
  */
 @Service
-@Slf4j
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity> implements ISysUserService  {
+@AllArgsConstructor
+public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUserEntity> implements ISysUserService {
+    private final ISysRoleUserService sysRoleUserService;
+    private final ISysDeptService sysDeptService;
 
-    /**
-     * 根据条件分页查询用户列表
-     * @param searchDTO
-     * @return {@link PageDataGridRespDTO< SysUserDTO>}
-     * @date 2025/8/26 17:51
-     * @author zhehen.lu
-     */
     @Override
-    public PageDataGridRespDTO<SysUserDTO> listPage(SysUserSearchDTO searchDTO) {
-        ValidateUtil.notNull(searchDTO, CommonCode.PARMA_NOT_NULL);
+    public PageData<SysUserDTO> page(Map<String, Object> params) {
+        //转换成like
+        paramsToLike(params, "username");
 
-        LambdaQueryChainWrapper<SysUserEntity> wrapper = getWrapper(searchDTO);
+        //分页
+        IPage<SysUserEntity> page = getPage(params, Constant.CREATE_DATE, false);
 
-        PageQueryUtil<SysUserEntity, SysUserSearchDTO> pageQueryUtil = new PageQueryUtil<>(
-                SysUserEntity.class,
-                PageQueryUtil.TypeEnum.PARAM_PRIORITY_DEFAULT_PRIMARY,
-                searchDTO
-        );
+        //普通管理员，只能查询所属部门及子部门的数据
+        UserDetail user = SecurityUser.getUser();
+        if (user.getSuperAdmin() == SuperAdminEnum.NO.value()) {
+            params.put("deptIdList", sysDeptService.getSubDeptIdList(user.getDeptId()));
+        }
 
-        IPage<SysUserEntity> page = wrapper.page(pageQueryUtil.buildPageObj());
+        //查询
+        List<SysUserEntity> list = baseDao.getList(params);
 
-        return PageDataGridRespUtil.convert(page, SysUserDTO.class);
+        return getPageData(list, page.getTotal(), SysUserDTO.class);
     }
 
-    /**
-     * TODO: write description
-     * @param dto
-     *
-     * @date 2025/8/26 17:50
-     * @author zhehen.lu
-     */
     @Override
-    public void create(SysUserDTO dto) {
-        ValidateUtil.notNull(dto, CommonCode.PARMA_NOT_NULL);
-        SysUserEntity entity = BeanUtil.copyProperties(dto, SysUserEntity.class);
+    public List<SysUserDTO> list(Map<String, Object> params) {
+        //普通管理员，只能查询所属部门及子部门的数据
+        UserDetail user = SecurityUser.getUser();
+        if (user.getSuperAdmin() == SuperAdminEnum.NO.value()) {
+            params.put("deptIdList", sysDeptService.getSubDeptIdList(user.getDeptId()));
+        }
 
-        save(entity);
+        List<SysUserEntity> entityList = baseDao.getList(params);
+
+        return ConvertUtils.sourceToTarget(entityList, SysUserDTO.class);
     }
 
-    /**
-     * TODO: write description
-     * @param userId
-     * @return {@link SysUserDTO}
-     * @date 2025/8/26 17:50
-     * @author zhehen.lu
-     */
     @Override
-    public SysUserDTO getDetailById(Long userId) {
-        SysUserSearchDTO searchDTO = new SysUserSearchDTO();
-        searchDTO.setUserId(userId);
-        searchDTO.setDelFlag(Boolean.FALSE);
+    public SysUserDTO get(Long id) {
+        SysUserEntity entity = baseDao.getById(id);
 
-        return getDetail(searchDTO);
+        return ConvertUtils.sourceToTarget(entity, SysUserDTO.class);
     }
 
-    /**
-     * TODO: write description
-     * @param searchDTO
-     * @return {@link SysUserDTO}
-     * @date 2025/8/26 17:50
-     * @author zhehen.lu
-     */
     @Override
-    public SysUserDTO getDetail(SysUserSearchDTO searchDTO) {
-        LambdaQueryChainWrapper<SysUserEntity> wrapper = getWrapper(searchDTO);
-        SysUserEntity entity = wrapper
-                .last("LIMIT 1")
-                .one();
-
-        return BeanUtil.copyProperties(entity, SysUserDTO.class);
+    public SysUserDTO getByUsername(String username) {
+        SysUserEntity entity = baseDao.getByUsername(username);
+        return ConvertUtils.sourceToTarget(entity, SysUserDTO.class);
     }
 
-    /**
-     * TODO: write description
-     * @param dto
-     *
-     * @date 2025/8/26 17:50
-     * @author zhehen.lu
-     */
     @Override
-    public void updateById(SysUserDTO dto) {
-        ValidateUtil.notNull(dto, CommonCode.PARMA_NOT_NULL);
-        SysUserEntity entity = BeanUtil.copyProperties(dto, SysUserEntity.class);
+    @Transactional(rollbackFor = Exception.class)
+    public void save(SysUserDTO dto) {
+        SysUserEntity entity = ConvertUtils.sourceToTarget(dto, SysUserEntity.class);
 
+        //密码加密
+        String password = PasswordUtils.encode(entity.getPassword());
+        entity.setPassword(password);
+
+        //保存用户
+        entity.setSuperAdmin(SuperAdminEnum.NO.value());
+        insert(entity);
+
+        //保存角色用户关系
+        sysRoleUserService.saveOrUpdate(entity.getId(), dto.getRoleIdList());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void update(SysUserDTO dto) {
+        SysUserEntity entity = ConvertUtils.sourceToTarget(dto, SysUserEntity.class);
+
+        //密码加密
+        if (StrUtil.isBlank(dto.getPassword())) {
+            entity.setPassword(null);
+        } else {
+            String password = PasswordUtils.encode(entity.getPassword());
+            entity.setPassword(password);
+        }
+
+        //更新用户
         updateById(entity);
+
+        //更新角色用户关系
+        sysRoleUserService.saveOrUpdate(entity.getId(), dto.getRoleIdList());
     }
 
-    /**
-     * TODO: write description
-     * @param searchDTO
-     * @return {@link List< SysUserDTO>}
-     * @date 2025/8/26 17:51
-     * @author zhehen.lu
-     */
     @Override
-    public List<SysUserDTO> list(SysUserSearchDTO searchDTO) {
-        ValidateUtil.notNull(searchDTO, CommonCode.PARMA_NOT_NULL);
+    public void delete(Long[] ids) {
+        //删除用户
+        baseDao.deleteBatchIds(Arrays.asList(ids));
 
-        LambdaQueryChainWrapper<SysUserEntity> wrapper = getWrapper(searchDTO);
-
-        List<SysUserEntity> entityList = wrapper.list();
-
-        return BeanUtil.copyToList(entityList, SysUserDTO.class);
+        //删除角色用户关系
+        sysRoleUserService.deleteByUserIds(ids);
     }
 
-    /**
-     * 获取Wrapper
-     * @param searchDTO
-     * @return {@link LambdaQueryChainWrapper< SysUserEntity>}
-     * @date 2025/8/21 20:12
-     * @author zhehen.lu
-     */
-    private LambdaQueryChainWrapper<SysUserEntity> getWrapper(SysUserSearchDTO searchDTO) {
-        return lambdaQuery()
-                .eq(NumberUtil.isGtZero(searchDTO.getUserId()), SysUserEntity::getUserId, searchDTO.getUserId())
-                .eq(StringUtils.isNoneEmpty(searchDTO.getUserName()), SysUserEntity::getUserName, searchDTO.getUserName())
-                .eq(searchDTO.getDelFlag() != null, SysUserEntity::getDelFlag, searchDTO.getDelFlag());
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updatePassword(Long id, String newPassword) {
+        newPassword = PasswordUtils.encode(newPassword);
+
+        baseDao.updatePassword(id, newPassword);
     }
+
+    @Override
+    public int getCountByDeptId(Long deptId) {
+        return baseDao.getCountByDeptId(deptId);
+    }
+
+    @Override
+    public List<Long> getUserIdListByDeptId(List<Long> deptIdList) {
+        return baseDao.getUserIdListByDeptId(deptIdList);
+    }
+
 
 }

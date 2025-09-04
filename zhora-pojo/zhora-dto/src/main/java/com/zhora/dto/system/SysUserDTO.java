@@ -1,120 +1,84 @@
 package com.zhora.dto.system;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.zhora.common.validator.group.AddGroup;
+import com.zhora.common.validator.group.DefaultGroup;
+import com.zhora.common.validator.group.UpdateGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
- * 用户信息
+ * 用户管理
  *
  * @author zhehen.lu
- * @date 2025/8/21 19:37
+ * @since 1.0.0
  */
 @Data
-@Schema(name = "SysUserDTO",description = "用户信息模型")
-public class SysUserDTO {
-    /** 用户ID */
-    @Schema(description = "用户ID")
-    private Long userId;
+@Schema(title = "用户管理")
+public class SysUserDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    /** 部门ID */
-    @Schema(description = "部门ID")
-    private Long deptId;
+	@Schema(title = "id")
+	@Null(message="{id.null}", groups = AddGroup.class)
+	@NotNull(message="{id.require}", groups = UpdateGroup.class)
+	private Long id;
 
-    /** 登录名称 */
-    @Schema(description = "登录名称")
-    private String loginName;
+	@Schema(title = "用户名", required = true)
+	@NotBlank(message="{sysuser.username.require}", groups = DefaultGroup.class)
+	private String username;
 
-    /** 用户名称 */
-    @Schema(description = "用户名称")
-    private String userName;
+	@Schema(title = "密码")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@NotBlank(message="{sysuser.password.require}", groups = AddGroup.class)
+	private String password;
 
-    /** 用户类型 */
-    @Schema(description = "用户类型")
-    private String userType;
+	@Schema(title = "姓名", requiredMode = Schema.RequiredMode.REQUIRED)
+	@NotBlank(message="{sysuser.realName.require}", groups = DefaultGroup.class)
+	private String realName;
 
-    /** 用户邮箱 */
-    @Schema(description = "用户邮箱")
-    private String email;
+	@Schema(title = "头像")
+	private String headUrl;
 
-    /** 手机号码 */
-    @Schema(description = "手机号码")
-    private String phonenumber;
+	@Schema(title = "性别   0：男   1：女    2：保密", required = true)
+	@Range(min=0, max=2, message = "{sysuser.gender.range}", groups = DefaultGroup.class)
+	private Integer gender;
 
-    /** 用户性别 */
-    @Schema(description = "用户性别")
-    private String sex;
+	@Schema(title = "邮箱")
+	@Email(message="{sysuser.email.error}", groups = DefaultGroup.class)
+	private String email;
 
-    /** 用户头像 */
-    @Schema(description = "用户头像")
-    private String avatar;
+	@Schema(title = "手机号")
+	private String mobile;
 
-    /** 密码 */
-    @Schema(description = "密码")
-    private String password;
+	@Schema(title = "部门ID", required = true)
+	@NotNull(message="{sysuser.deptId.require}", groups = DefaultGroup.class)
+	private Long deptId;
 
-    /** 盐加密 */
-    @Schema(description = "盐加密")
-    private String salt;
+	@Schema(title = "状态  0：停用    1：正常", required = true)
+	@Range(min=0, max=1, message = "{sysuser.status.range}", groups = DefaultGroup.class)
+	private Integer status;
 
-    /** 账号状态（0正常 1停用） */
-    @Schema(description = "账号状态（0正常 1停用）")
-    private String status;
+	@Schema(title = "创建时间")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	private Date createDate;
 
-    /** 最后登录IP */
-    @Schema(description = "最后登录IP")
-    private String loginIp;
+	@Schema(title = "超级管理员   0：否   1：是")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	private Integer superAdmin;
 
-    /** 最后登录时间 */
-    @Schema(description = "最后登录时间")
-    private Date loginDate;
+	@Schema(title = "角色ID列表")
+	private List<Long> roleIdList;
 
-    /** 密码最后更新时间 */
-    @Schema(description = "密码最后更新时间")
-    private Date pwdUpdateDate;
+	@Schema(title = "部门名称")
+	private String deptName;
 
-    /** 备注 */
-    @Schema(description = "备注")
-    private String remark;
-
-    /**
-     * 删除标记,true:已删除,false:正常
-     */
-    @Schema(description = "删除标记,true:已删除,false:正常")
-    private Boolean delFlag;
-
-    /**
-     * 创建人
-     */
-    @Schema(description = "创建人")
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    @Schema(description = "创建时间")
-    private Date createTime;
-
-    /**
-     * 更新人
-     */
-    @Schema(description = "更新人")
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    @Schema(description = "更新时间")
-    private Date updateTime;
-
-    public boolean isAdmin()
-    {
-        return isAdmin(this.userId);
-    }
-
-    public static boolean isAdmin(Long userId)
-    {
-        return userId != null && 1L == userId;
-    }
 }

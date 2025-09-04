@@ -10,6 +10,7 @@ import java.text.MessageFormat;
 public enum CommonCode implements ErrorCode {
     // 只使用0-1999之间的错误码
     SUCCESS(0, "成功"),
+    INTERNAL_SERVER_ERROR(500, "日期格式错误"),
     DATE_FORMAT_ERROR(1000, "日期格式错误"),
     PARAM_ERROR(1001, "参数错误"),
     THIRD_INTERFACE_ERR(1002, "第三方接口调用失败"),
@@ -45,6 +46,8 @@ public enum CommonCode implements ErrorCode {
     APP_ID_ERROR(1027, "应用ID缺失！"),
     APP_SECRET_ERROR(1028, "应用私钥缺失！"),
     MQ_SEND_ERROR(1029, "MQ发送失败！"),
+
+    RENREN_SEND_ERROR(1029, "人人错误！"),
     ;
 
     private Integer code;

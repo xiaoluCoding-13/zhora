@@ -1,154 +1,159 @@
 package com.zhora.service.system.impl;
 
-import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhora.common.dto.page.PageDataGridRespDTO;
 import com.zhora.common.errcode.CommonCode;
-import com.zhora.common.utils.ValidateUtil;
-import com.zhora.db.common.util.PageDataGridRespUtil;
-import com.zhora.db.common.util.PageQueryUtil;
+import com.zhora.common.exception.BaseException;
+import com.zhora.common.utils.ConvertUtils;
+import com.zhora.common.utils.TreeUtils;
+import com.zhora.constant.Constant;
+import com.zhora.dto.system.SecurityUser;
 import com.zhora.dto.system.SysDeptDTO;
-import com.zhora.dto.system.search.SysDeptSearchDTO;
+import com.zhora.dto.system.UserDetail;
 import com.zhora.entity.system.SysDeptEntity;
+import com.zhora.enums.system.SuperAdminEnum;
 import com.zhora.mapper.system.SysDeptMapper;
+import com.zhora.mapper.system.SysUserMapper;
+import com.zhora.service.service.impl.BaseServiceImpl;
 import com.zhora.service.system.ISysDeptService;
-import org.apache.commons.collections4.CollectionUtils;
+import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-/**
- * 部门表(sys_dept)表服务实现类
- *
- * @author zhehen.lu
- * @since 2025-08-26 18:02:15
- */
+
 @Service
-public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity> implements ISysDeptService {
+@AllArgsConstructor
+public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDeptEntity> implements ISysDeptService {
 
-    /**
-     * 根据条件分页查询部门表列表
-     *
-     * @param searchDTO
-     * @return {@link PageDataGridRespDTO< SysDeptDTO>}
-     * @date 2025-08-26 18:02:15
-     * @author zhehen.lu
-     */
+    private final SysUserMapper userMapper;
+
     @Override
-    public PageDataGridRespDTO<SysDeptDTO> listPage(SysDeptSearchDTO searchDTO) {
-        ValidateUtil.notNull(searchDTO, CommonCode.PARMA_NOT_NULL);
+    public List<SysDeptDTO> list(Map<String, Object> params) {
+        //普通管理员，只能查询所属部门及子部门的数据
+        UserDetail user = SecurityUser.getUser();
+        if (user.getSuperAdmin() == SuperAdminEnum.NO.value()) {
+            params.put("deptIdList", getSubDeptIdList(user.getDeptId()));
+        }
 
-        LambdaQueryChainWrapper<SysDeptEntity> wrapper = getWrapper(searchDTO);
+        //查询部门列表
+        List<SysDeptEntity> entityList = baseDao.getList(params);
 
-        PageQueryUtil<SysDeptEntity, SysDeptSearchDTO> pageQueryUtil = new PageQueryUtil<>(
-                SysDeptEntity.class,
-                PageQueryUtil.TypeEnum.PARAM_PRIORITY_DEFAULT_PRIMARY,
-                searchDTO
-        );
+        List<SysDeptDTO> dtoList = ConvertUtils.sourceToTarget(entityList, SysDeptDTO.class);
 
-        IPage<SysDeptEntity> page = wrapper.page(pageQueryUtil.buildPageObj());
-
-        return PageDataGridRespUtil.convert(page, SysDeptDTO.class);
+        return TreeUtils.build(dtoList);
     }
 
-    /**
-     * 创建部门表
-     *
-     * @param dto
-     * @date 2025-08-26 18:02:15
-     * @author zhehen.lu
-     */
     @Override
-    public void create(SysDeptDTO dto) {
-        ValidateUtil.notNull(dto, CommonCode.PARMA_NOT_NULL);
-        SysDeptEntity entity = BeanUtil.copyProperties(dto, SysDeptEntity.class);
+    public SysDeptDTO get(Long id) {
+        //超级管理员，部门ID为null
+        if (id == null) {
+            return null;
+        }
 
-        save(entity);
+        SysDeptEntity entity = baseDao.getById(id);
+
+        return ConvertUtils.sourceToTarget(entity, SysDeptDTO.class);
     }
 
-    /**
-     * 依据ID获取部门表详情
-     *
-     * @param id
-     * @return {@link SysDeptDTO}
-     * @date 2025-08-26 18:02:15
-     * @author zhehen.lu
-     */
     @Override
-    public SysDeptDTO getDetailById(Long id) {
-        SysDeptSearchDTO searchDTO = new SysDeptSearchDTO();
-        searchDTO.setDeptId(id);
-        searchDTO.setDelFlag(Boolean.FALSE);
+    @Transactional(rollbackFor = Exception.class)
+    public void save(SysDeptDTO dto) {
+        SysDeptEntity entity = ConvertUtils.sourceToTarget(dto, SysDeptEntity.class);
 
-        return getDetail(searchDTO);
+        entity.setPids(getPidList(entity.getPid()));
+        insert(entity);
     }
 
-    /**
-     * 获取部门表详情
-     *
-     * @param searchDTO
-     * @return {@link SysDeptDTO}
-     * @date 2025-08-26 18:02:15
-     * @author zhehen.lu
-     */
     @Override
-    public SysDeptDTO getDetail(SysDeptSearchDTO searchDTO) {
-        LambdaQueryChainWrapper<SysDeptEntity> wrapper = getWrapper(searchDTO);
-        SysDeptEntity entity = wrapper
-                .last("LIMIT 1")
-                .one();
+    @Transactional(rollbackFor = Exception.class)
+    public void update(SysDeptDTO dto) {
+        SysDeptEntity entity = ConvertUtils.sourceToTarget(dto, SysDeptEntity.class);
 
-        return BeanUtil.copyProperties(entity, SysDeptDTO.class);
-    }
+        //上级部门不能为自身
+        if (entity.getId().equals(entity.getPid())) {
+            throw new BaseException(CommonCode.RENREN_SEND_ERROR);
+        }
 
-    /**
-     * 依据ID更新部门表数据
-     *
-     * @param dto
-     * @date 2025-08-26 18:02:15
-     * @author zhehen.lu
-     */
-    @Override
-    public void updateById(SysDeptDTO dto) {
-        ValidateUtil.notNull(dto, CommonCode.PARMA_NOT_NULL);
-        SysDeptEntity entity = BeanUtil.copyProperties(dto, SysDeptEntity.class);
+        //上级部门不能为下级部门
+        List<Long> subDeptList = getSubDeptIdList(entity.getId());
+        if (subDeptList.contains(entity.getPid())) {
+            throw new BaseException(CommonCode.RENREN_SEND_ERROR);
+        }
 
+        entity.setPids(getPidList(entity.getPid()));
         updateById(entity);
     }
 
-    /**
-     * 获取部门表列表
-     *
-     * @param searchDTO
-     * @return {@link List< SysDeptDTO>}
-     * @date 2025-08-26 18:02:15
-     * @author zhehen.lu
-     */
     @Override
-    public List<SysDeptDTO> list(SysDeptSearchDTO searchDTO) {
-        ValidateUtil.notNull(searchDTO, CommonCode.PARMA_NOT_NULL);
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(Long id) {
+        //判断是否有子部门
+        List<Long> subList = getSubDeptIdList(id);
+        if (subList.size() > 1) {
+            throw new BaseException(CommonCode.RENREN_SEND_ERROR);
+        }
 
-        LambdaQueryChainWrapper<SysDeptEntity> wrapper = getWrapper(searchDTO);
+        //判断部门下面是否有用户
+        int count = userMapper.getCountByDeptId(id);
+        if (count > 0) {
+            throw new BaseException(CommonCode.RENREN_SEND_ERROR);
+        }
 
-        List<SysDeptEntity> entityList = wrapper.list();
+        //删除
+        baseDao.deleteById(id);
+    }
 
-        return BeanUtil.copyToList(entityList, SysDeptDTO.class);
+    @Override
+    public List<Long> getSubDeptIdList(Long id) {
+        List<Long> deptIdList = baseDao.getSubDeptIdList("%" + id + "%");
+        deptIdList.add(id);
+
+        return deptIdList;
     }
 
     /**
-     * 获取部门表的Wrapper对象
+     * 获取所有上级部门ID
      *
-     * @param searchDTO
-     * @return {@link LambdaQueryChainWrapper< SysDeptEntity>}
-     * @date 2025-08-26 18:02:15
-     * @author zhehen.lu
+     * @param pid 上级ID
      */
-    private LambdaQueryChainWrapper<SysDeptEntity> getWrapper(SysDeptSearchDTO searchDTO) {
-        return lambdaQuery()
-                .in(CollectionUtils.isNotEmpty(searchDTO.getDeptIdList()), SysDeptEntity::getDeptId, searchDTO.getDeptIdList())
-                .eq(null != searchDTO.getDelFlag(), SysDeptEntity::getDelFlag, Boolean.FALSE);
+    private String getPidList(Long pid) {
+        //顶级部门，无上级部门
+        if (Constant.DEPT_ROOT.equals(pid)) {
+            return Constant.DEPT_ROOT + "";
+        }
+
+        //所有部门的id、pid列表
+        List<SysDeptEntity> deptList = baseDao.getIdAndPidList();
+
+        //list转map
+        Map<Long, SysDeptEntity> map = new HashMap<>(deptList.size());
+        for (SysDeptEntity entity : deptList) {
+            map.put(entity.getId(), entity);
+        }
+
+        //递归查询所有上级部门ID列表
+        List<Long> pidList = new ArrayList<>();
+        getPidTree(pid, map, pidList);
+
+        return StringUtils.join(pidList, ",");
     }
 
+    private void getPidTree(Long pid, Map<Long, SysDeptEntity> map, List<Long> pidList) {
+        //顶级部门，无上级部门
+        if (Constant.DEPT_ROOT.equals(pid)) {
+            return;
+        }
+
+        //上级部门存在
+        SysDeptEntity parent = map.get(pid);
+        if (parent != null) {
+            getPidTree(parent.getPid(), map, pidList);
+        }
+
+        pidList.add(pid);
+    }
 }

@@ -1,26 +1,24 @@
 package com.zhora.common.utils;
 
-import com.zhora.common.utils.spring.SpringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 /**
  * 获取i18n资源文件
- * 
+ *
  * @author zhehen.lu
  */
-public class MessageUtils
-{
-    /**
-     * 根据消息键和参数 获取消息 委托给spring messageSource
-     *
-     * @param code 消息键
-     * @param args 参数
-     * @return 获取国际化翻译值
-     */
-    public static String message(String code, Object... args)
-    {
-        MessageSource messageSource = SpringUtils.getBean(MessageSource.class);
-        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
+public class MessageUtils {
+    private static MessageSource messageSource;
+    static {
+        messageSource = (MessageSource)ApplicationContextUtil.getBean("messageSource");
+    }
+
+    public static String getMessage(int code){
+        return getMessage(code, new String[0]);
+    }
+
+    public static String getMessage(int code, String... params){
+        return messageSource.getMessage(code+"", params, LocaleContextHolder.getLocale());
     }
 }

@@ -2,7 +2,7 @@ package com.zhora.db.common.util;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zhora.common.dto.page.PageDataGridRespDTO;
+import com.zhora.common.domain.page.PageDataGridRespDTO;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;

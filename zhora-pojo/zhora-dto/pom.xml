@@ -32,6 +32,13 @@
             <artifactId>zhora-db-common</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!-- 引入适配jakarta的依赖包 -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <classifier>jakarta</classifier>
+        </dependency>
     </dependencies>
 
 </project>

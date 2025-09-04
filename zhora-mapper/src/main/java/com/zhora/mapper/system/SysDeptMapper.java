@@ -1,15 +1,33 @@
 package com.zhora.mapper.system;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zhora.entity.system.SysDeptEntity;
+import com.zhora.mapper.BaseDao;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+import java.util.Map;
 
 /**
- * 部门表(sys_dept)表数据库访问层
- *
+ * 部门管理
+ * 
  * @author zhehen.lu
- * @since 2025-08-26 17:48:49
  */
-public interface SysDeptMapper extends BaseMapper<SysDeptEntity> {
+@Mapper
+public interface SysDeptMapper extends BaseDao<SysDeptEntity> {
+
+    List<SysDeptEntity> getList(Map<String, Object> params);
+
+    SysDeptEntity getById(Long id);
+
+    /**
+     * 获取所有部门的id、pid列表
+     */
+    List<SysDeptEntity> getIdAndPidList();
+
+    /**
+     * 根据部门ID，获取所有子部门ID列表
+     * @param id   部门ID
+     */
+    List<Long> getSubDeptIdList(String id);
 
 }
-

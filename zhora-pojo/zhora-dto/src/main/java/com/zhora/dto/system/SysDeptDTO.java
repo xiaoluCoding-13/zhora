@@ -1,101 +1,74 @@
 package com.zhora.dto.system;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.zhora.common.domain.TreeNode;
+import com.zhora.common.validator.group.AddGroup;
+import com.zhora.common.validator.group.DefaultGroup;
+import com.zhora.common.validator.group.UpdateGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 部门表(sys_dept)实体类
+ * 部门管理
  *
  * @author zhehen.lu
- * @since 2025-08-26 16:43:57
+ * @since 1.0.0
  */
 @Data
-@Schema(name = "SysDeptDTO",description = "部门信息模型")
-public class SysDeptDTO {
-    /**
-     * 部门id
-     */
-    @Schema(description = "部门id")
-    private Long deptId;
+@EqualsAndHashCode(callSuper = true)
+@Schema(title = "部门管理")
+public class SysDeptDTO extends TreeNode implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * 父部门id
-     */
-    @Schema(description = "父部门id")
-    private Long parentId;
+	@Schema(title = "id")
+	@Null(message="{id.null}", groups = AddGroup.class)
+	@NotNull(message="{id.require}", groups = UpdateGroup.class)
+	private Long id;
 
-    /**
-     * 祖级列表
-     */
-    @Schema(description = "祖级列表")
-    private String ancestors;
+	@Schema(title = "上级ID")
+	@NotNull(message="{sysdept.pid.require}", groups = DefaultGroup.class)
+	private Long pid;
 
-    /**
-     * 部门名称
-     */
-    @Schema(description = "部门名称")
-    private String deptName;
+	@Schema(title = "部门名称")
+	@NotBlank(message="{sysdept.name.require}", groups = DefaultGroup.class)
+	private String name;
 
-    /**
-     * 显示顺序
-     */
-    @Schema(description = "显示顺序")
-    private Integer orderNum;
+	@Schema(title = "排序")
+	@Min(value = 0, message = "{sort.number}", groups = DefaultGroup.class)
+	private Integer sort;
 
-    /**
-     * 负责人
-     */
-    @Schema(description = "负责人")
-    private String leader;
+	@Schema(title = "创建时间")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	private Date createDate;
 
-    /**
-     * 联系电话
-     */
-    @Schema(description = "联系电话")
-    private String phone;
+	@Schema(title = "上级部门名称")
+	private String parentName;
 
-    /**
-     * 邮箱
-     */
-    @Schema(description = "邮箱")
-    private String email;
+	@Override
+	public Long getId() {
+		return id;
+	}
 
-    /**
-     * 部门状态（0正常 1停用）
-     */
-    @Schema(description = "部门状态（0正常 1停用）")
-    private String status;
+	@Override
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * 删除标记,true:已删除,false:正常
-     */
-    @Schema(description = "删除标记,true:已删除,false:正常")
-    private Boolean delFlag;
+	@Override
+	public Long getPid() {
+		return pid;
+	}
 
-    /**
-     * 创建人
-     */
-    @Schema(description = "创建人")
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    @Schema(description = "创建时间")
-    private Date createTime;
-
-    /**
-     * 更新人
-     */
-    @Schema(description = "更新人")
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    @Schema(description = "更新时间")
-    private Date updateTime;
+	@Override
+	public void setPid(Long pid) {
+		this.pid = pid;
+	}
 }
-

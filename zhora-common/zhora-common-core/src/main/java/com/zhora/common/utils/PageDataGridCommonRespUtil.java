@@ -1,7 +1,7 @@
 package com.zhora.common.utils;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.zhora.common.dto.page.PageDataGridRespDTO;
+import com.zhora.common.domain.page.PageDataGridRespDTO;
 
 import java.util.ArrayList;
 import java.util.List;

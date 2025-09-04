@@ -1,33 +1,31 @@
 package com.zhora.service.system;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhora.common.dto.page.PageDataGridRespDTO;
+import com.zhora.common.domain.page.PageData;
 import com.zhora.dto.system.SysRoleDTO;
-import com.zhora.dto.system.search.SysRoleSearchDTO;
 import com.zhora.entity.system.SysRoleEntity;
+import com.zhora.service.service.BaseService;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+
 
 /**
- * 角色信息表(sys_role)表服务接口
- *
+ * 角色
+ * 
  * @author zhehen.lu
- * @since 2025-08-26 17:49:56
  */
-public interface ISysRoleService extends IService<SysRoleEntity> {
+public interface ISysRoleService extends BaseService<SysRoleEntity> {
 
-    PageDataGridRespDTO<SysRoleDTO> listPage(SysRoleSearchDTO searchDTO);
+	PageData<SysRoleDTO> page(Map<String, Object> params);
 
-    void create(SysRoleDTO dto);
+	List<SysRoleDTO> list(Map<String, Object> params);
 
-    SysRoleDTO getDetailById(Long id);
+	SysRoleDTO get(Long id);
 
-    SysRoleDTO getDetail(SysRoleSearchDTO searchDTO);
+	void save(SysRoleDTO dto);
 
-    void updateById(SysRoleDTO dto);
+	void update(SysRoleDTO dto);
 
-    List<SysRoleDTO> list(SysRoleSearchDTO searchDTO);
+	void delete(Long[] ids);
 
-    Set<String> selectRoleKeys(Long userId);
 }

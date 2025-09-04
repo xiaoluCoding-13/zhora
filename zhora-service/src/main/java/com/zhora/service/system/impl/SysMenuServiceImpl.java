@@ -1,233 +1,102 @@
 package com.zhora.service.system.impl;
 
-import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhora.common.dto.page.PageDataGridRespDTO;
 import com.zhora.common.errcode.CommonCode;
-import com.zhora.common.utils.NumberUtil;
-import com.zhora.common.utils.ValidateUtil;
-import com.zhora.db.common.util.PageDataGridRespUtil;
-import com.zhora.db.common.util.PageQueryUtil;
+import com.zhora.common.exception.BaseException;
+import com.zhora.common.utils.ConvertUtils;
+import com.zhora.common.utils.TreeUtils;
+import com.zhora.constant.Constant;
 import com.zhora.dto.system.SysMenuDTO;
-import com.zhora.dto.system.search.SysMenuSearchDTO;
+import com.zhora.dto.system.UserDetail;
 import com.zhora.entity.system.SysMenuEntity;
+import com.zhora.enums.system.SuperAdminEnum;
 import com.zhora.mapper.system.SysMenuMapper;
+import com.zhora.service.service.impl.BaseServiceImpl;
 import com.zhora.service.system.ISysMenuService;
+import com.zhora.service.system.ISysRoleMenuService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- * 菜单权限表(sys_menu)表服务实现类
- *
- * @author zhehen.lu
- * @since 2025-08-28 16:22:18
- */
 @Service
-public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity> implements ISysMenuService {
+@AllArgsConstructor
+public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenuEntity> implements ISysMenuService {
 
-    /**
-     * 根据条件分页查询菜单权限表列表
-     *
-     * @param searchDTO
-     * @return {@link PageDataGridRespDTO< SysMenuDTO>}
-     * @date 2025-08-28 16:22:18
-     * @author zhehen.lu
-     */
+    private final ISysRoleMenuService sysRoleMenuService;
+
     @Override
-    public PageDataGridRespDTO<SysMenuDTO> listPage(SysMenuSearchDTO searchDTO) {
-        ValidateUtil.notNull(searchDTO, CommonCode.PARMA_NOT_NULL);
+    public SysMenuDTO get(Long id) {
+        SysMenuEntity entity = baseDao.getById(id);
 
-        LambdaQueryChainWrapper<SysMenuEntity> wrapper = getWrapper(searchDTO);
+        SysMenuDTO dto = ConvertUtils.sourceToTarget(entity, SysMenuDTO.class);
 
-        PageQueryUtil<SysMenuEntity, SysMenuSearchDTO> pageQueryUtil = new PageQueryUtil<>(
-                SysMenuEntity.class,
-                PageQueryUtil.TypeEnum.PARAM_PRIORITY_DEFAULT_PRIMARY,
-                searchDTO
-        );
-
-        IPage<SysMenuEntity> page = wrapper.page(pageQueryUtil.buildPageObj());
-
-        return PageDataGridRespUtil.convert(page, SysMenuDTO.class);
+        return dto;
     }
 
-    /**
-     * 创建菜单权限表
-     *
-     * @param dto
-     * @date 2025-08-28 16:22:18
-     * @author zhehen.lu
-     */
     @Override
-    public void create(SysMenuDTO dto) {
-        ValidateUtil.notNull(dto, CommonCode.PARMA_NOT_NULL);
-        SysMenuEntity entity = BeanUtil.copyProperties(dto, SysMenuEntity.class);
+    @Transactional(rollbackFor = Exception.class)
+    public void save(SysMenuDTO dto) {
+        SysMenuEntity entity = ConvertUtils.sourceToTarget(dto, SysMenuEntity.class);
 
-        save(entity);
+        //保存菜单
+        insert(entity);
     }
 
-    /**
-     * 依据ID获取菜单权限表详情
-     *
-     * @param id
-     * @return {@link SysMenuDTO}
-     * @date 2025-08-28 16:22:18
-     * @author zhehen.lu
-     */
     @Override
-    public SysMenuDTO getDetailById(Long id) {
-        SysMenuSearchDTO searchDTO = new SysMenuSearchDTO();
-        searchDTO.setMenuId(id);
-        searchDTO.setDelFlag(Boolean.FALSE);
+    @Transactional(rollbackFor = Exception.class)
+    public void update(SysMenuDTO dto) {
+        SysMenuEntity entity = ConvertUtils.sourceToTarget(dto, SysMenuEntity.class);
 
-        return getDetail(searchDTO);
-    }
+        //上级菜单不能为自身
+        if (entity.getId().equals(entity.getPid())) {
+            throw new BaseException(CommonCode.RENREN_SEND_ERROR);
+        }
 
-    /**
-     * 获取菜单权限表详情
-     *
-     * @param searchDTO
-     * @return {@link SysMenuDTO}
-     * @date 2025-08-28 16:22:18
-     * @author zhehen.lu
-     */
-    @Override
-    public SysMenuDTO getDetail(SysMenuSearchDTO searchDTO) {
-        LambdaQueryChainWrapper<SysMenuEntity> wrapper = getWrapper(searchDTO);
-        SysMenuEntity entity = wrapper
-                .last("LIMIT 1")
-                .one();
-
-        return BeanUtil.copyProperties(entity, SysMenuDTO.class);
-    }
-
-    /**
-     * 依据ID更新菜单权限表数据
-     *
-     * @param dto
-     * @date 2025-08-28 16:22:18
-     * @author zhehen.lu
-     */
-    @Override
-    public void updateById(SysMenuDTO dto) {
-        ValidateUtil.notNull(dto, CommonCode.PARMA_NOT_NULL);
-        SysMenuEntity entity = BeanUtil.copyProperties(dto, SysMenuEntity.class);
-
+        //更新菜单
         updateById(entity);
     }
 
-    /**
-     * 获取菜单权限表列表
-     *
-     * @param searchDTO
-     * @return {@link List< SysMenuDTO>}
-     * @date 2025-08-28 16:22:18
-     * @author zhehen.lu
-     */
     @Override
-    public List<SysMenuDTO> list(SysMenuSearchDTO searchDTO) {
-        ValidateUtil.notNull(searchDTO, CommonCode.PARMA_NOT_NULL);
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(Long id) {
+        //删除菜单
+        deleteById(id);
 
-        LambdaQueryChainWrapper<SysMenuEntity> wrapper = getWrapper(searchDTO);
-
-        List<SysMenuEntity> entityList = wrapper.list();
-
-        return BeanUtil.copyToList(entityList, SysMenuDTO.class);
+        //删除角色菜单关系
+        sysRoleMenuService.deleteByMenuId(id);
     }
 
     @Override
-    public List<SysMenuDTO> selectMenuAll() {
-        return List.of();
+    public List<SysMenuDTO> getAllMenuList(Integer menuType) {
+        List<SysMenuEntity> menuList = baseDao.getMenuList(menuType);
+
+        List<SysMenuDTO> dtoList = ConvertUtils.sourceToTarget(menuList, SysMenuDTO.class);
+
+        return TreeUtils.build(dtoList, Constant.MENU_ROOT);
     }
 
     @Override
-    public List<SysMenuDTO> selectMenuAllByUserId(Long userId) {
-        return List.of();
+    public List<SysMenuDTO> getUserMenuList(UserDetail user, Integer menuType) {
+        List<SysMenuEntity> menuList;
+
+        //系统管理员，拥有最高权限
+        if (user.getSuperAdmin() == SuperAdminEnum.YES.value()) {
+            menuList = baseDao.getMenuList(menuType);
+        } else {
+            menuList = baseDao.getUserMenuList(user.getId(), menuType);
+        }
+
+        List<SysMenuDTO> dtoList = ConvertUtils.sourceToTarget(menuList, SysMenuDTO.class);
+
+        return TreeUtils.build(dtoList);
     }
 
     @Override
-    public List<SysMenuDTO> selectMenuNormalAll() {
-        return List.of();
-    }
+    public List<SysMenuDTO> getListPid(Long pid) {
+        List<SysMenuEntity> menuList = baseDao.getListPid(pid);
 
-    @Override
-    public List<SysMenuDTO> selectMenusByUserId(Long userId) {
-        return List.of();
-    }
-
-    @Override
-    public List<String> selectPermsByUserId(Long userId) {
-        return List.of();
-    }
-
-    @Override
-    public List<String> selectPermsByRoleId(Long roleId) {
-        return List.of();
-    }
-
-    @Override
-    public List<String> selectMenuTree(Long roleId) {
-        return List.of();
-    }
-
-    @Override
-    public List<SysMenuDTO> selectMenuList(SysMenuDTO menu) {
-        return List.of();
-    }
-
-    @Override
-    public List<SysMenuDTO> selectMenuListByUserId(SysMenuDTO menu) {
-        return List.of();
-    }
-
-    @Override
-    public int deleteMenuById(Long menuId) {
-        return 0;
-    }
-
-    @Override
-    public SysMenuDTO selectMenuById(Long menuId) {
-        return null;
-    }
-
-    @Override
-    public int selectCountMenuByParentId(Long parentId) {
-        return 0;
-    }
-
-    @Override
-    public int insertMenu(SysMenuDTO menu) {
-        return 0;
-    }
-
-    @Override
-    public int updateMenu(SysMenuDTO menu) {
-        return 0;
-    }
-
-    @Override
-    public void updateMenuSort(SysMenuDTO menu) {
-
-    }
-
-    @Override
-    public SysMenuDTO checkMenuNameUnique(String menuName, Long parentId) {
-        return null;
-    }
-
-    /**
-     * 获取菜单权限表的Wrapper对象
-     *
-     * @param searchDTO
-     * @return {@link LambdaQueryChainWrapper< SysMenuEntity>}
-     * @date 2025-08-28 16:22:18
-     * @author zhehen.lu
-     */
-    private LambdaQueryChainWrapper<SysMenuEntity> getWrapper(SysMenuSearchDTO searchDTO) {
-        return lambdaQuery()
-                .eq(NumberUtil.isGtZero(searchDTO.getMenuId()), SysMenuEntity::getMenuId, searchDTO.getMenuId());
+        return ConvertUtils.sourceToTarget(menuList, SysMenuDTO.class);
     }
 
 }

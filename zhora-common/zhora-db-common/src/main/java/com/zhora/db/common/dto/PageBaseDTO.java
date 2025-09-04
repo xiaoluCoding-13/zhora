@@ -1,6 +1,6 @@
 package com.zhora.db.common.dto;
 
-import com.zhora.common.dto.page.PageBaseReqVO;
+import com.zhora.common.domain.page.PageBaseReqVO;
 import lombok.Data;
 
 /**

@@ -1,168 +1,124 @@
 package com.zhora.service.system.impl;
 
-import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhora.common.dto.page.PageDataGridRespDTO;
-import com.zhora.common.errcode.CommonCode;
-import com.zhora.common.utils.ValidateUtil;
-import com.zhora.db.common.util.PageDataGridRespUtil;
-import com.zhora.db.common.util.PageQueryUtil;
+import com.zhora.common.domain.page.PageData;
+import com.zhora.common.utils.ConvertUtils;
+import com.zhora.constant.Constant;
+import com.zhora.dto.system.SecurityUser;
 import com.zhora.dto.system.SysRoleDTO;
-import com.zhora.dto.system.search.SysRoleSearchDTO;
+import com.zhora.dto.system.UserDetail;
 import com.zhora.entity.system.SysRoleEntity;
+import com.zhora.enums.system.SuperAdminEnum;
 import com.zhora.mapper.system.SysRoleMapper;
-import com.zhora.service.system.ISysRoleService;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.zhora.service.service.impl.BaseServiceImpl;
+import com.zhora.service.system.*;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
- * 角色信息表(sys_role)表服务实现类
+ * 角色
  *
  * @author zhehen.lu
- * @since 2025-08-26 18:59:58
  */
 @Service
-public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity> implements ISysRoleService {
+@AllArgsConstructor
+public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRoleEntity> implements ISysRoleService {
+    private final ISysRoleMenuService sysRoleMenuService;
+    private final ISysRoleDataScopeService sysRoleDataScopeService;
+    private final ISysRoleUserService sysRoleUserService;
+    private final ISysDeptService sysDeptService;
 
-    /**
-     * 根据条件分页查询角色信息表列表
-     *
-     * @param searchDTO
-     * @return {@link PageDataGridRespDTO< SysRoleDTO>}
-     * @date 2025-08-26 18:59:58
-     * @author zhehen.lu
-     */
     @Override
-    public PageDataGridRespDTO<SysRoleDTO> listPage(SysRoleSearchDTO searchDTO) {
-        ValidateUtil.notNull(searchDTO, CommonCode.PARMA_NOT_NULL);
-
-        LambdaQueryChainWrapper<SysRoleEntity> wrapper = getWrapper(searchDTO);
-
-        PageQueryUtil<SysRoleEntity, SysRoleSearchDTO> pageQueryUtil = new PageQueryUtil<>(
-                SysRoleEntity.class,
-                PageQueryUtil.TypeEnum.PARAM_PRIORITY_DEFAULT_PRIMARY,
-                searchDTO
+    public PageData<SysRoleDTO> page(Map<String, Object> params) {
+        IPage<SysRoleEntity> page = baseDao.selectPage(
+                getPage(params, Constant.CREATE_DATE, false),
+                getWrapper(params)
         );
 
-        IPage<SysRoleEntity> page = wrapper.page(pageQueryUtil.buildPageObj());
-
-        return PageDataGridRespUtil.convert(page, SysRoleDTO.class);
-    }
-
-    /**
-     * 创建角色信息表
-     *
-     * @param dto
-     * @date 2025-08-26 18:59:58
-     * @author zhehen.lu
-     */
-    @Override
-    public void create(SysRoleDTO dto) {
-        ValidateUtil.notNull(dto, CommonCode.PARMA_NOT_NULL);
-        SysRoleEntity entity = BeanUtil.copyProperties(dto, SysRoleEntity.class);
-
-        save(entity);
-    }
-
-    /**
-     * 依据ID获取角色信息表详情
-     *
-     * @param id
-     * @return {@link SysRoleDTO}
-     * @date 2025-08-26 18:59:58
-     * @author zhehen.lu
-     */
-    @Override
-    public SysRoleDTO getDetailById(Long id) {
-        SysRoleSearchDTO searchDTO = new SysRoleSearchDTO();
-        searchDTO.setRoleId(id);
-        searchDTO.setDelFlag(Boolean.FALSE);
-
-        return getDetail(searchDTO);
-    }
-
-    /**
-     * 获取角色信息表详情
-     *
-     * @param searchDTO
-     * @return {@link SysRoleDTO}
-     * @date 2025-08-26 18:59:58
-     * @author zhehen.lu
-     */
-    @Override
-    public SysRoleDTO getDetail(SysRoleSearchDTO searchDTO) {
-        LambdaQueryChainWrapper<SysRoleEntity> wrapper = getWrapper(searchDTO);
-        SysRoleEntity entity = wrapper
-                .last("LIMIT 1")
-                .one();
-
-        return BeanUtil.copyProperties(entity, SysRoleDTO.class);
-    }
-
-    /**
-     * 依据ID更新角色信息表数据
-     *
-     * @param dto
-     * @date 2025-08-26 18:59:58
-     * @author zhehen.lu
-     */
-    @Override
-    public void updateById(SysRoleDTO dto) {
-        ValidateUtil.notNull(dto, CommonCode.PARMA_NOT_NULL);
-        SysRoleEntity entity = BeanUtil.copyProperties(dto, SysRoleEntity.class);
-
-        updateById(entity);
-    }
-
-    /**
-     * 获取角色信息表列表
-     *
-     * @param searchDTO
-     * @return {@link List< SysRoleDTO>}
-     * @date 2025-08-26 18:59:58
-     * @author zhehen.lu
-     */
-    @Override
-    public List<SysRoleDTO> list(SysRoleSearchDTO searchDTO) {
-        ValidateUtil.notNull(searchDTO, CommonCode.PARMA_NOT_NULL);
-
-        LambdaQueryChainWrapper<SysRoleEntity> wrapper = getWrapper(searchDTO);
-
-        List<SysRoleEntity> entityList = wrapper.list();
-
-        return BeanUtil.copyToList(entityList, SysRoleDTO.class);
+        return getPageData(page, SysRoleDTO.class);
     }
 
     @Override
-    public Set<String> selectRoleKeys(Long userId) {
-        List<SysRoleEntity> perms = this.baseMapper.selectRolesByUserId(userId);
-        Set<String> permsSet = new HashSet<>();
-        for (SysRoleEntity perm : perms) {
-            if (Objects.nonNull(perm)) {
-                permsSet.addAll(Arrays.asList(perm.getRoleKey().trim().split(StringPool.COMMA)));
-            }
+    public List<SysRoleDTO> list(Map<String, Object> params) {
+        List<SysRoleEntity> entityList = baseDao.selectList(getWrapper(params));
+
+        return ConvertUtils.sourceToTarget(entityList, SysRoleDTO.class);
+    }
+
+    private QueryWrapper<SysRoleEntity> getWrapper(Map<String, Object> params) {
+        String name = (String) params.get("name");
+
+        QueryWrapper<SysRoleEntity> wrapper = new QueryWrapper<>();
+        wrapper.like(StrUtil.isNotBlank(name), "name", name);
+
+        //普通管理员，只能查询所属部门及子部门的数据
+        UserDetail user = SecurityUser.getUser();
+        if (user.getSuperAdmin() == SuperAdminEnum.NO.value()) {
+            List<Long> deptIdList = sysDeptService.getSubDeptIdList(user.getDeptId());
+            wrapper.in(deptIdList != null, "dept_id", deptIdList);
         }
-        return permsSet;
+
+        return wrapper;
     }
 
-    /**
-     * 获取角色信息表的Wrapper对象
-     *
-     * @param searchDTO
-     * @return {@link LambdaQueryChainWrapper< SysRoleEntity>}
-     * @date 2025-08-26 18:59:58
-     * @author zhehen.lu
-     */
-    private LambdaQueryChainWrapper<SysRoleEntity> getWrapper(SysRoleSearchDTO searchDTO) {
-        return lambdaQuery()
-                .in(CollectionUtils.isNotEmpty(searchDTO.getRoleIdList()), SysRoleEntity::getRoleId, searchDTO.getRoleIdList())
-                .eq(null != searchDTO.getDelFlag(), SysRoleEntity::getDelFlag, Boolean.FALSE);
+    @Override
+    public SysRoleDTO get(Long id) {
+        SysRoleEntity entity = baseDao.selectById(id);
+
+        return ConvertUtils.sourceToTarget(entity, SysRoleDTO.class);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void save(SysRoleDTO dto) {
+        SysRoleEntity entity = ConvertUtils.sourceToTarget(dto, SysRoleEntity.class);
+
+        //保存角色
+        insert(entity);
+
+        //保存角色菜单关系
+        sysRoleMenuService.saveOrUpdate(entity.getId(), dto.getMenuIdList());
+
+        //保存角色数据权限关系
+        sysRoleDataScopeService.saveOrUpdate(entity.getId(), dto.getDeptIdList());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void update(SysRoleDTO dto) {
+        SysRoleEntity entity = ConvertUtils.sourceToTarget(dto, SysRoleEntity.class);
+
+        //更新角色
+        updateById(entity);
+
+        //更新角色菜单关系
+        sysRoleMenuService.saveOrUpdate(entity.getId(), dto.getMenuIdList());
+
+        //更新角色数据权限关系
+        sysRoleDataScopeService.saveOrUpdate(entity.getId(), dto.getDeptIdList());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(Long[] ids) {
+        //删除角色
+        baseDao.deleteBatchIds(Arrays.asList(ids));
+
+        //删除角色用户关系
+        sysRoleUserService.deleteByRoleIds(ids);
+
+        //删除角色菜单关系
+        sysRoleMenuService.deleteByRoleIds(ids);
+
+        //删除角色数据权限关系
+        sysRoleDataScopeService.deleteByRoleIds(ids);
     }
 
 }
