@@ -1,9 +1,7 @@
-
-
 # zhora 项目简介
 
 ## 🌐 项目概述
-**zhora**（`Zhehen's Heuristic Operational Response Agent`）是基于 Java 21 和 LangChain4j �arsenals 构建的新一代智能体系统，支持聊天、文档问答 (RAG)、PPT 生成、流式响应等功能。
+**zhora**（`Zhehen's Heuristic Operational Response Agent`）是基于 Java 21 和 LangChain4j 构建的新一代智能体系统，支持聊天、文档问答 (RAG)、PPT 生成、流式响应等功能。
 
 本项目采用模块化设计，便于扩展和维护，主要模块包括：
 - **zhora-admin** - 提供 AI 相关接口服务和核心功能实现
@@ -46,7 +44,7 @@
 ### zhora-common
 提供通用工具类和异常处理框架，包括：
 - **StringUtils, NumberUtil, MessageUtils**：字符串、数字、消息处理工具。
-- **Exception 模块**：统一的异常处理体系，包含 `BaseException`, `UserException`, `ServiceException` �6540
+- **Exception 模块**：统一的异常处理体系，包含 `BaseException`, `UserException`, `ServiceException`。
 - **XSS 安全过滤**：通过 `XssFilter` 和 `XssValidator` 提供请求内容安全校验。
 
 ### zhora-service
