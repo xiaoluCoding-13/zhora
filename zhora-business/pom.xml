@@ -20,6 +20,7 @@
     <modules>
         <module>zhora-admin</module>
         <module>zhora-front</module>
+        <module>zhora-ai</module>
     </modules>
 
     <dependencies>

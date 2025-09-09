@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/zhora?useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false
+    username: zhora
+    password: zhora
+    driver-class-name: org.postgresql.Driver

@@ -1,0 +1,85 @@
+# 环境配置
+server:
+  servlet:
+    # 应用的访问路径
+    context-path: /agent
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # 连接数满后的排队数，默认为100
+    accept-count: 1000
+    threads:
+      # tomcat最大线程数，默认为200
+      max: 800
+      # Tomcat启动初始化的线程数，默认值10
+      min-spare: 100
+
+# Spring配置
+spring:
+  autoconfigure:
+    # 禁用 WebFlux 自动配置
+    exclude: org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration
+  application:
+    name: zhora-ai
+    admin:
+      # 关闭 Spring Boot 的管理 JMX bean
+      enabled: false
+  profiles:
+    active: @spring.profiles.active@
+    include: dynamic-@spring.profiles.active@
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: servlet
+  # 文件上传
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size: 10MB
+      # 设置总上传的文件大小
+      max-request-size: 20MB
+  mvc:
+    async:
+      # 禁用异步请求超时
+      request-timeout: -1
+  jmx:
+    enabled: false
+
+# MyBatis-Plus 配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 控制台打印 SQL
+    map-underscore-to-camel-case: true  # 下划线转驼峰命名
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID  # 主键策略（AUTO=自增，ASSIGN_ID=雪花ID）
+      logic-delete-field: del_flag  # 逻辑删除字段（默认 deleted）
+      logic-delete-value: true  # 逻辑删除值
+      logic-not-delete-value: false  # 未删除值
+  mapper-locations: classpath:mapper/**/*.xml  # XML 映射文件路径（可选）
+
+# Knife4j 配置
+knife4j:
+  enable: true  # 开启 Knife4j
+  setting:
+    language: zh-CN  # 中文界面
+    enable-swagger-default: false  # 禁用原生 Swagger UI
+# 防止XSS攻击
+xss:
+  # 过滤开关
+  enabled: true
+  # 排除链接（多个用逗号分隔）
+  excludes: /system/notice
+  # 匹配链接
+  urlPatterns: /system/*,/monitor/*,/tool/*
+
+springdoc:
+  api-docs:
+    # 是否开启接口文档
+    enabled: true
+  swagger-ui:
+    # 持久化认证数据
+    persistAuthorization: true
+  #这里定义了分组，可定义多个，也可以不定义
+  group-configs:
+    - group: 1.ai模块
+      packages-to-scan: com.zhora.ai.v1
