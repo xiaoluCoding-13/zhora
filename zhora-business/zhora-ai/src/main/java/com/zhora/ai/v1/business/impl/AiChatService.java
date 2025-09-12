@@ -3,8 +3,8 @@ package com.zhora.ai.v1.business.impl;
 import com.zhora.common.exception.ServiceException;
 import com.zhora.entity.ai.AiLlmConfigEntity;
 import com.zhora.enums.ai.LlmCodeEnum;
-import com.zhora.ai.v1.business.AiChatAssistant;
-import com.zhora.ai.v1.business.SystemToolAssistant;
+import com.zhora.ai.v1.business.IAiChatAssistant;
+import com.zhora.ai.v1.business.ISystemToolAssistant;
 import com.zhora.ai.v1.dto.ChatDTO;
 import com.zhora.service.ai.IAiLlmConfigService;
 import dev.langchain4j.service.TokenStream;
@@ -29,17 +29,17 @@ public class AiChatService {
 
     @Autowired
     @Qualifier("deepSeekChatAssistant")
-    private AiChatAssistant deepSeekChatAssistant;
+    private IAiChatAssistant deepSeekChatAssistant;
 
     @Autowired
     @Qualifier("qwenChatAssistant")
-    private AiChatAssistant qwenChatAssistant;
+    private IAiChatAssistant qwenChatAssistant;
 
     @Autowired
-    private SystemToolAssistant deepSeekToolAssistant;
+    private ISystemToolAssistant deepSeekToolAssistant;
 
     @Autowired
-    private SystemToolAssistant qwenToolAssistant;
+    private ISystemToolAssistant qwenToolAssistant;
 
     public TokenStream actionPrecedenceExecuteWith(String sessionIdentifier, String userMessage) {
         LlmCodeEnum code = getPrecedenceLlmCode();

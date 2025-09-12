@@ -55,6 +55,7 @@
 
 		<joda.time.version>2.14.0</joda.time.version>
 		<bitwalker.version>1.21</bitwalker.version>
+		<minio.version>8.5.17</minio.version>
 	</properties>
 
 	<!-- 依赖声明 -->
@@ -344,6 +345,12 @@
 				<version>${bitwalker.version}</version>
 			</dependency>
 
+			<!-- minio存储文件 -->
+			<dependency>
+				<groupId>io.minio</groupId>
+				<artifactId>minio</artifactId>
+				<version>${minio.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

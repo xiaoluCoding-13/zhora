@@ -803,5 +803,32 @@ create index idx_qrtz_ft_jg on qrtz_fired_triggers(SCHED_NAME,JOB_GROUP);
 create index idx_qrtz_ft_t_g on qrtz_fired_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
 create index idx_qrtz_ft_tg on qrtz_fired_triggers(SCHED_NAME,TRIGGER_GROUP);
 
-
 commit;
+
+CREATE TABLE "ai_library" (
+  "id" int8 NOT NULL,
+  "name" varchar COLLATE "pg_catalog"."default",
+  "description" varchar COLLATE "pg_catalog"."default",
+  "del_flag" bool DEFAULT false,
+  "create_by" varchar(64) COLLATE "pg_catalog"."default",
+  "create_time" timestamp(6),
+  "update_by" varchar(64) COLLATE "pg_catalog"."default",
+  "update_time" timestamp(6),
+  CONSTRAINT "ai_library_pkey" PRIMARY KEY ("id")
+);
+
+COMMENT ON COLUMN "ai_library"."name" IS '知识库名称';
+
+COMMENT ON COLUMN "ai_library"."description" IS '知识库描述';
+
+COMMENT ON COLUMN "ai_library"."del_flag" IS '删除标记,true:已删除,false:正常';
+
+COMMENT ON COLUMN "ai_library"."create_by" IS '创建人';
+
+COMMENT ON COLUMN "ai_library"."create_time" IS '创建时间';
+
+COMMENT ON COLUMN "ai_library"."update_by" IS '更新人';
+
+COMMENT ON COLUMN "ai_library"."update_time" IS '更新时间';
+
+COMMENT ON TABLE "ai_library" IS '知识库';

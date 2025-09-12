@@ -6,7 +6,7 @@ import com.zhora.enums.ai.LlmCodeEnum;
 import com.zhora.ai.component.PromptConfiguration;
 import com.zhora.ai.config.ai.model.DeepSeekChatModelConfig;
 import com.zhora.ai.config.ai.model.QwenChatModelConfig;
-import com.zhora.ai.v1.business.AiChatAssistant;
+import com.zhora.ai.v1.business.IAiChatAssistant;
 import com.zhora.service.ai.IAiLlmConfigService;
 import dev.langchain4j.community.model.dashscope.QwenStreamingChatModel;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
@@ -37,8 +37,8 @@ public class ChatModelInitializer {
     }
 
     @Bean
-    public AiChatAssistant deepSeekChatAssistant(OpenAiStreamingChatModel deepSeekChatModel) {
-        return AiServices.builder(AiChatAssistant.class)
+    public IAiChatAssistant deepSeekChatAssistant(OpenAiStreamingChatModel deepSeekChatModel) {
+        return AiServices.builder(IAiChatAssistant.class)
                 .streamingChatModel(deepSeekChatModel)
                 .systemMessageProvider(chatMemoryId -> promptConfiguration.getSystem())
                 .chatMemoryProvider(memoryId -> MessageWindowChatMemory.withMaxMessages(10))
@@ -65,8 +65,8 @@ public class ChatModelInitializer {
     }
 
     @Bean
-    public AiChatAssistant qwenChatAssistant(QwenStreamingChatModel qwenStreamingChatModel) {
-        return AiServices.builder(AiChatAssistant.class)
+    public IAiChatAssistant qwenChatAssistant(QwenStreamingChatModel qwenStreamingChatModel) {
+        return AiServices.builder(IAiChatAssistant.class)
                 .streamingChatModel(qwenStreamingChatModel)
                 .systemMessageProvider(chatMemoryId -> promptConfiguration.getSystem())
                 .chatMemoryProvider(memoryId -> MessageWindowChatMemory.withMaxMessages(10))

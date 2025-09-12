@@ -47,6 +47,12 @@ public enum CommonCode implements ErrorCode {
     APP_SECRET_ERROR(1028, "应用私钥缺失！"),
     MQ_SEND_ERROR(1029, "MQ发送失败！"),
 
+    THE_FILE_NAME_CANNOT_BE_EMPTY(1030, "文件名不能为空！"),
+    THE_UPLOADED_FILE_CANNOT_BE_EMPTY(1030, "上传的文件不能为空！"),
+    ILLEGAL_FILE_UPLOAD(1030, "非法的上传文件！"),
+    AVATAR_SIZE_CANNOT_EXCEED(1030, "头像大小不能超过200KB！"),
+    THE_SIZE_OF_THE_KNOWLEDGE_BASE_DOCUMENT_CANNOT_EXCEED(1030, "知识库文档大小不能超过1MB！"),
+
     RENREN_SEND_ERROR(1029, "人人错误！"),
     ;
 

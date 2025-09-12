@@ -1,5 +1,5 @@
 server:
-  port: 9003
+  port: 19003
 
 spring:
   # 服务模块
@@ -39,7 +39,9 @@ logging:
     com.zhora: debug
     org.springframework: info
 
-logging.level.org.springframework.web: TRACE
-logging.level.org.springframework.http: DEBUG
-logging.level.org.springframework.servlet: DEBUG
-
+# minio文件存储
+minio:
+  endpoint: http://127.0.0.1:9000
+  access-key: minio
+  secret-key: minio123
+  default-bucket: zhora

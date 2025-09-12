@@ -5,7 +5,7 @@ import dev.langchain4j.service.TokenStream;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.memory.ChatMemoryAccess;
 
-public interface SystemToolAssistant extends ChatMemoryAccess {
+public interface ISystemToolAssistant extends ChatMemoryAccess {
   /**
    * 会话ID的问答
    */

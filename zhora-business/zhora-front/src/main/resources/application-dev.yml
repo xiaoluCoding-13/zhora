@@ -1,5 +1,5 @@
 server:
-  port: 9002
+  port: 19002
 
 spring:
   # 服务模块

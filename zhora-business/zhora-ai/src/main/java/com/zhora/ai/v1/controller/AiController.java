@@ -29,7 +29,7 @@ import java.util.Map;
  */
 @RestController
 @CrossOrigin
-@RequestMapping("/ai/v1")
+@RequestMapping("/v1")
 @Slf4j
 @Tag(name = "ai大模型相关")
 public class AiController {

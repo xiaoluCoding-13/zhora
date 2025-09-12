@@ -21,11 +21,6 @@ import java.text.MessageFormat;
  */
 public enum AiErrorCode implements ErrorCode {
     USER_NAME_MORE_THAN(10000, "用户名称太长"),
-    USER_NOT_EXIST(10001, "用户不存在"),
-    NOT_URL_ADDRESS(10002, "不是合法的url地址"),
-    USER_OR_PASSWORD_ERROR(10002, "用户或密码错误"),
-    YOU_HAVE_LOGGED_IN_ELSEWHERE_PLEASE_CHANGE_YOUR_PASSWORD_OR_LOG_IN_AGAIN(10002, "您已在别处登录，请您修改密码或重新登录"),
-
 
     ;
 
